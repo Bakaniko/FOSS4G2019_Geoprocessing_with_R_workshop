@@ -1,0 +1,17 @@
+base
+knitr
+ggplot2
+tidyverse
+tibble
+tidyr
+readr
+purrr
+dplyr
+stringr
+forcats
+sf
+tmap
+viridisLite
+viridis
+ggspatial
+mapview

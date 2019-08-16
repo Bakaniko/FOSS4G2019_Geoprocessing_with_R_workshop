@@ -1,0 +1,333 @@
+# Geoprocessing in R
+
+For this part, we will use mostly {sf} capabilities. Most spatial functions (if not all) start with the `st_` (*for spatial type*) prefix like in [PostGIS](https://postgis.net/docs/manual-2.5/reference.html).
+
+We will focus on vector data from the {spData} package.
+
+```{r libraries}
+library(dplyr)
+library(sf)
+library(spData)
+library(here)
+```
+
+
+## Read / write
+{sf} provides the `st_read` and `st_write` functions to access geospatial files. They can operate with any [vector driver provided by GDAL](https://gdal.org/drivers/vector/index.html).
+
+We will use the data from the {spData}^[More details on the datasets here : [https://cran.r-project.org/web/packages/spData/spData.pdf](https://cran.r-project.org/web/packages/spData/spData.pdf)] package. Let's see what it contains :
+
+```{r spData_files}
+list.files(system.file("shapes", package = "spData"))
+```
+
+We will work on cycle hires in London so let's get that data.
+
+### Cycle hire dataset
+
+```{r load_hire_data}
+cycle_hire <- st_read(system.file("shapes/cycle_hire.geojson", package="spData"))
+```
+
+Here we can see a couple of functions :
+
+* `st_read()` is the reading function from {sf}
+* `system.file()` is a function that allow us to look for data in packages, independently of the operating system.
+
+By default, {sf} provides informations when loading the dataset. We can see it contains 742 features and 5 fields. It is points with lat/lon coordinates (we can see it through dataset SRID : 4326). {sf} also provides the bounding box and if possible the proj4string.
+
+Here is the description of the dataset we can find in the documentation: 
+
+```{block2, type='rmdnote'}
+**cycle_hire dataset**
+  
+~Description:~ Points representing cycle hire points accross London.
+
+~Format:~
+  
+ *  **id** Id of the hire point
+ *  **name** Name of the point
+ *  **area** Area they are in
+ *  **nbikes** The number of bikes currently parked there  
+ *  **nempty** The number of empty places
+ *  *geometry* sfc_POINT
+
+~Source~: [cyclehireapp.com/cyclehirelive/cyclehire.csv](cyclehireapp.com/cyclehirelive/cyclehire.csv)
+```
+
+
+We can see that there is the bike parked, the count of empty slots but not the total amount of bike slots. Let's create a new `slots` column for this.
+
+```{r create_bike_slots}
+cycle_hire <- cycle_hire %>% 
+  mutate(slots = nbikes +  nempty)
+```
+
+Let's load polygon data, in this case London's boroughs stored in the *lnd* dataset.
+
+### Boroughs of London
+
+This dataset is contained in a R data format so the loading is different.
+
+```{r loading_lnd}
+data(lnd) # load the dataset in memory
+lnd       # call the dataset to visualise the 10 first features
+```
+
+We can see this dataset contains 33 features and 7 fields, in lat/lon coordinates too.
+
+```{block2, type='rmdnote'}
+**ldn dataset**
+
+The boroughs of London
+
+Description : Polygons representing large administrative zones in London
+
+Format:
+  
+  *  **NAME** Borough name
+  *  **GSS_CODE** Official code
+  *  **HECTARES** How many hectares
+  *  **NONLD_AREA** Area outside London
+  *  **ONS_INNER** Office for national statistics code
+  *  **SUB_2009** Empty column
+  *  **SUB_2006** Empty column
+  *  *geometry* sfc_MULTIPOLYGON
+
+Source : [https://github.com/Robinlovelace/Creating-maps-in-R](https://github.com/Robinlovelace/Creating-maps-in-R)
+```
+
+In order to ease spatial calculations, let's reproject them.
+
+## Reprojection {#reprojection}
+
+The [Ordnance Survey National Grid](https://en.wikipedia.org/wiki/Ordnance_Survey_National_Grid) is the official one for Great Britain. Its SRID is **EPSG:27700**.
+
+```{r data_reprojection}
+cycle_hire_27700 <- cycle_hire %>%
+  st_transform(crs = st_crs(27700))
+
+london_27700 <- lnd %>%
+  st_transform(crs = st_crs(27700))
+```
+
+TO reproject, we used 2 functions:
+- `st_transform()` for the reprojection
+- `st_crs()` to get CRS definition from EPSG code
+
+We also use the pipe operator : `%>%`, it is useful to pipe data to another function. This is provided by the [{magrittr} package](https://cran.r-project.org/web/packages/magrittr/index.html) through {dplyr} and {sf}.
+
+Now, we can create a quick map to visualize our data. We can use the `plot()` function to do this. This function is part of base R.
+
+```{r quick_plot}
+plot(london_27700$geometry) # we just want to plot the geometry column
+plot(cycle_hire_27700$geometry, 
+ col = "red",  # color
+ cex = 0.5,    # size of symbol
+ add = TRUE)   # important parameter to create multilayer plots
+```
+
+
+## Joins
+We can use two ways to link those datasets together, by attributes, they share their area name (`area` and `NAME`) or spatially. For the sake of the exercice, let's do both.
+
+### Join by attributes
+
+Let's join them  with a inner join to see how many have corresponding
+
+```{r inner_attribute_join}
+cycle_hire_27700 %>% inner_join(
+  london_27700 %>%
+    st_drop_geometry(), # we don't need the geometry here
+  by = c( "area" = "NAME")
+  
+)
+```
+
+
+We can see that only 33 features matched. That's poor, let's try this spatially.
+
+### Spatial join
+
+For this, we will try to provide a `GSS_CODE` for all  cycle hire points. We will regroup the data afterwards.
+
+For this, we will select only the `GSS_CODE` column from `london_27700` with the `select` function from {dplyr}, the geometry will follow.
+
+```{r spatial_join}
+cycle_hire_27700 <- cycle_hire_27700 %>% st_join(london_27700 %>% select(GSS_CODE))
+```
+
+Now if we look at our dataset, there is a `GSS_CODE` column.
+
+```{r names_cycle_hire}
+names(cycle_hire_27700)
+```
+
+How many points doesn't have a GSS_code ?
+
+```{r controle_nas}
+cycle_hire_27700 %>% filter(is.na(GSS_CODE))
+```
+
+Only one, that's more better than before ! I don't know well enough London to fix this. But that is not blocking.
+
+Now to paraphrase Anita Graser   : [[@graserAggregate]](https://anitagraser.com/2017/06/08/aggregate-all-the-things-qgis-expression-edition/)
+
+## Aggregation
+### Count
+
+```{r aggregation_count}
+cycle_hire_by_area <- cycle_hire_27700 %>%
+  filter(!is.na(GSS_CODE)) %>% # remove NAs
+  st_drop_geometry() %>% # let's put geometry aside
+  group_by(GSS_CODE) %>%  # group data by GSS_CODE
+  tally(name = "count", sort= TRUE) # Aggregate
+cycle_hire_by_area
+```
+
+
+### Sum
+
+```{r aggregation_sum}
+cycle_hire_by_area_sum <- cycle_hire_27700 %>%
+  filter(!is.na(GSS_CODE)) %>% # remove NAs
+  st_drop_geometry() %>% # let's put geometry aside
+  group_by(GSS_CODE) %>%  # group data by GSS_CODE
+  summarise(sum = sum(nbikes), count = n()) # Aggregate
+cycle_hire_by_area_sum
+```
+
+We could have use the base function `aggregate()` which works with {sf} objects.
+
+```{r aggregate_alternative}
+aggregate(cycle_hire_27700["nbikes"], by = list(cycle_hire_27700$"GSS_CODE"),
+                       FUN = sum, na.rm = TRUE)
+```
+
+If we want to represents our data with proportionnal symbols, we might want to have centroids. {sf} provides two functions in order to do that:
+
+* `st_centroid()`
+* `st_point_on_surface()`
+
+`st_point_on_surface()` provides a point randomly **in** the entry shape. That can be useful for irregular shapes where the centroid might be outside the shape.
+
+## Centroids
+
+```{r centroids}
+boroughs_centroids <- london_27700 %>%
+  select(NAME, GSS_CODE) %>% # only keep useful columns
+  st_centroid()
+
+```
+You can also do buffers and other geometrical operations like [`st_union()`](https://r-spatial.github.io/sf/reference/geos_combine.html) to merge geometries
+
+![Spatial equivalents of logical operators [@lovelace_geocomputation_2019]](images/venn-clip-1.png)
+
+
+## Geometric binary predicates
+
+{sf} provides numerous geometric binary predicates that can be used with the intersection function.
+
+* st_intersects()
+* st_disjoint()
+* st_touches()
+* st_crosses()
+* st_within()
+* st_contains()
+* st_contains_properly()
+* st_overlaps()
+* st_equals()
+* st_covers()
+* st_covered_by()
+* st_equals_exact()
+* st_is_within_distance()
+
+You can use it alone or with  ̀st_join()`. 
+
+For example, if we want to the cycle hires contained in the borough of Wandsworth, we will do like this.
+
+```{r find_E09000032}
+london_27700 %>% 
+  filter(NAME == "Wandsworth") %>% 
+  st_contains(cycle_hire_27700)
+```
+
+That will return a list of cycle hire points id.
+
+In contrary, if we want to find in which borough the hire point with id 614 is we need to do this :
+
+```{r borough_of_614}
+cycle_hire_27700 %>% filter(id == "614") %>% 
+  st_within(london_27700) # borough at index 22
+```
+
+To get the borough data, there is some more work to do.
+
+```{r get_borough22}
+london_27700[unlist(cycle_hire_27700 %>% filter(id == "614") %>% st_within(london_27700)),]
+```
+
+## Saving results
+
+
+In the first part, we saw that we can read data but we can also write it !
+
+### Writing data
+
+To write data, we will use the `st_write()` function.
+It takes the data source name (*dsn*) as mandatory argument, {sf} will try to find the good driver from the extension (here it is *gpkg* for GeoPackage).
+
+```{block2, type='rmdwarning'}
+*st_write()* can't save non geospatial data. So we need to  join the data from cycle_hire_by_area_sum to
+the boroughs first.
+```
+
+As we want to save it to  GeoPackage^[Because [GeoPackage are cool !](http://switchfromshapefile.org/#geopackage)], we also need to provide a layer name : *london_boroughs_27700*. Repeat for all data you want to save.
+
+```{r write_geodata}
+
+london_27700 %>% left_join(cycle_hire_by_area_sum) %>%
+  st_write(
+    dsn = here("foss4g_R_workshop.gpkg"),
+    layer = "london_boroughs_27700")
+
+boroughs_centroids %>%
+  left_join(cycle_hire_by_area_sum) %>%
+  st_write(
+    dsn = here("foss4g_R_workshop.gpkg"),
+    layer = "boroughs_centroids_27700")
+
+
+cycle_hire_27700 %>%
+  left_join(cycle_hire_by_area_sum) %>%
+  st_write(
+    dsn = here("foss4g_R_workshop.gpkg"),
+    layer = "cycle_hire_27700")
+```
+
+```{block2, type='rmdnote'}
+We used the `here()` function as it preserve the project file hierarchy. It works better in Rstudio but it is still useful with Jupyter notebooks.
+
+The data set where joined by their GSS_CODE. You can specify the "by" statement, but for the sake of readability, it is not show here.
+```
+
+
+```{r here}
+print(here())  # print the project directory
+list.files(here()) # list the files in the project directory
+```
+
+
+### Check data
+
+{sf} provides a `st_layers()` function that is useful to see the content of a dataset.
+ 
+```{r check_gpkg}
+st_layers(dsn = here("foss4g_R_workshop.gpkg"))
+```
+
+Now that we have data, let's do some maps on it in the next chapter !
+
+
+
+

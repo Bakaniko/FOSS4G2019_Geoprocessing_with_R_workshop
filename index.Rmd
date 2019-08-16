@@ -1,0 +1,62 @@
+--- 
+title: "R for Geospatial Processing"
+author: "Nicolas Roelandt"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "This is the training materials for the **R for Geospatial Processing** workshop at FOSS4G 2019, Bucarest (Romania)."
+---
+
+# Prerequisites
+
+This workshop is designed for the attendance of FOSS4G 2019. So basics knowledge in GIS is expected (simple features, projections and CRS, geometrical operations, etc.).
+
+No knowledge of R is required. A minimal knowledge of [(R)mardown](https://rmarkdown.rstudio.com/) will be a plus to take notes.
+
+Please install R on your system and the following libraries.
+
+
+```{r needed_libraries, eval=FALSE}
+install.packages("dplyr")
+install.packages("sf")
+install.packages("spData")
+install.packages("here")
+install.packages("ggplot2")
+install.packages("tmap")
+install.packages("cartography")
+```
+
+## About this document
+This document had been written with the [R Bookdown package](https://bookdown.org/yihui/bookdown) and [Rstudio](https://www.rstudio.com). You can use the editor of your choice to follow the instruction, be careful on the path given by the {here} package.
+
+To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.name/tinytex/>.
+
+```{r setup, eval=T,echo=F,message=F,warning=F}
+knitr::opts_chunk$set(cache=T,echo=T,comment="",message=F,warning = F)
+# Load packages
+library(knitr)
+library(ggplot2)
+library(here)
+library(spData)
+library(tidyverse)
+library(sf)
+library(tmap)
+# library(viridis)
+# library(scales)
+# library(cartogram)
+library(ggspatial)
+# library(lwgeom)
+# library(mapview)
+theme_set(theme_gray())
+tmap_mode("plot")
+```
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```

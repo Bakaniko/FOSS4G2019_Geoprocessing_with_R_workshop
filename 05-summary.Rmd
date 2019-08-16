@@ -1,0 +1,15 @@
+# Final Words
+
+This is just a glimpse what it is possible to do with R for geospatial data analysis. There is more to discover ! You can do spatial analysis and geostatistics like spatial autocorrelation, kriging, etc. If you want to know more about it, please see [Spatial Data Science with R website](https://rspatial.org/analysis/index.html).
+
+We hope the material does help you get started with R, making it accessible for non staticians or non geographer people (the author is neither of that). R can be use alone as a full GIS, providing tools for data preparation, analysis, mapping and reporting. It can be also use in combination with other GIS tools like GRASS, SAGA or QGIS.
+
+This document has been made using the **bookdown** package [@R-bookdown] and has been inspired by [Maël Theulière bookdown tutorial "Les données spatiales avec R" (in French)](https://maeltheuliere.github.io/rspatial/index.html) and [Geocomputation with R (Lovelace, Nowosad, Muenchow)](https://geocompr.robinlovelace.net).
+
+
+This book was built with:
+
+```{r session_info}
+
+devtools::session_info()
+```

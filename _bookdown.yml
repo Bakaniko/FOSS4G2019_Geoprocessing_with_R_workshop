@@ -1,0 +1,10 @@
+book_filename: "FOSS4G2019_Geoprocessing_with_R_workshop"
+delete_merged_file: true
+output_dir: "docs"
+language:
+  label:
+    fig: "FIGURE "
+    tab: "TABLE "
+
+  ui:
+    chapter_name: "Chapter "

@@ -1,0 +1,228 @@
+# R basics
+
+How to manipulate data in R ? How to install and load a package ? Let's see..
+
+## Getting some help
+
+## Where am I ?
+
+To get the current directory, use `getwd()` : 
+
+```{r getwd}
+getwd()
+```
+
+If you need to change the directory, there is `setwd()`
+
+```{r setwd, eval=FALSE}
+setwd("path/to/my/directory")
+```
+
+
+If you use Rstudio, I can only recommand to work with a [project workflow](https://www.tidyverse.org/articles/2017/12/workflow-vs-script/) to avoid path issues on another computer.
+
+## Make calculations
+
+```{r calculations}
+1+1
+
+3 * 4
+
+7/3
+
+7%%3 # rest of the division
+
+```
+## Arthmetic functions
+R provides a lot of arithmetic functions by default :
+
+```{r arithmetic_functions}
+sqrt(4.0)
+abs(-625)
+log10(12900)
+```
+
+## Assign values to a variable
+
+```{r fruits}
+fruits <- c("apples", "pears", "lemons")
+fruits
+```
+
+
+```{r quantities}
+quantities <- c(3, 2, 1)
+print(quantities)
+```
+
+```{block2, type='rmdcaution'}
+Indices in R start at 1 !
+```
+
+```{r show_indices}
+print(fruits[1])
+print(fruits[0]) # returns nothing
+```
+
+## For loop and print
+### Simple for loop
+```{r print}
+for (fruit in fruits) {
+  print(fruit)
+}
+```
+
+### For loop with indices
+
+```{r loop_indices}
+for (x in seq(length(fruits))) {
+  print(paste0("I have ", quantities[x]," ", fruits[x],"."))
+}
+```
+
+```{block2, type='rmdwarning'}
+For loops in R are possible but not memory efficient.
+So if you need to walk through a large amount of data, please consider using functions instead.
+```
+## Data types
+
+### Vectors
+`fruits` and `quantities` are character and numeric vectors.
+
+```{r, vectors}
+class(fruits)
+class(quantities)
+```
+
+Vectors are the most basic R data object. There is six types of atomic vectors: logical, integer, double, complex, character and raw. You can't mix types in vectors.
+
+### Dataframes
+
+Another frequently encountered data type is the **dataframe**. It is a collection data organized by rows and columns. Columns that can be of different types. Rows don't have to unique but having [tidy data](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) is known as a good pratice :
+
+
+> 1. Each variable forms a column.
+  1. Each observation forms a row.
+  1. Each type of observational unit forms a table.
+
+Good thing is, in GIS, we tend to have tidy data, right ?
+
+How to create a data frame from our vectors ?
+
+#### With `cbind.data.frame()`
+
+
+```{r build_dataframe}
+df1 <- cbind.data.frame(fruits, quantities) # column binding
+print(df1)
+class(df1)
+```
+
+
+```{r build_dataframe2}
+df2 <- as_data_frame(fruits) # column binding
+colnames(df2) <- "fruits" # change column name
+print(df2)
+class(df2)
+```
+```{block2, type='rmdnote'}
+Tibbles (`tbl` // `tbl_df`) are dataframes on steroids from the tidyverse.
+```
+
+### Add columns to a dataframe
+```{r, add_column_to_df}
+
+df3 <- cbind(df2, # entry dataframe
+             quantities, # column with quantities
+             price = c(4,7,9) # new colum with price
+             )
+df3
+```
+
+
+
+### Other datatypes
+
+* Matrices
+* Lists (`list()`) : collection of objects of different kind
+
+```{block2, type='rmdcaution'}
+List in R are not like lists in Python.
+```
+
+## Filtering / Subsetting
+
+In R, you can subset your data by value or variable. There is several way to do it, here is some of them.
+
+
+### Select variables
+
+```{r, get_colnames}
+names(df3)
+```
+
+```{r select_indices}
+df3[, 2:3]
+df3[, c("fruits","price")]
+df3 %>% # pipe symbol
+  select(fruits, quantities) # select from dplyr
+```
+
+### Filter values
+
+```{r filtering_data}
+df3[df3["price"] > 5,] # don't forget the column comma
+
+df3 %>%
+  filter(quantities >= 2)
+```
+### Mixing selection and filtering
+
+```{r mix_select_filter}
+
+df3[df3["price"] > 5, 1] # select the prices > 5
+
+df3 %>% 
+  filter(price > 5) %>%  # filter first
+  select(fruits)         # select second
+```
+
+
+## Joins
+
+Let's create a new dataframe to join
+
+```{r df4}
+df4 <- cbind.data.frame(fruits = fruits, buyer = c("Sophie", "Marc", "Nathan"))
+df4
+```
+
+### Merge
+
+```{r merger_left}
+merged_df <- merge(x = df3, y = df4, by = "fruits", all = TRUE) # OUTER JOIN
+merged_df
+```
+
+
+See that [answer on StackOverflow](https://stackoverflow.com/questions/1299871/how-to-join-merge-data-frames-inner-outer-left-right) for more details on left, right, inner and outer joins with `merge()`.
+
+### Dplyr
+
+```{r dplyr_join}
+merged_df <- df3 %>%
+  full_join(df4) ## or full_join(df4, by = "fruits")
+
+merged_df
+```
+
+See the [documentation of {dplyr}](https://dplyr.tidyverse.org/reference/join.html) for more information on joins.
+
+## Going further 
+
+If you want to go further in the learning of the R language and the Tidyverse tools, there is a lot of resources online. You might want to start by those :
+
+* Base R : [R manuals](https://colinfay.me/r-manuals/)
+* Tidyverse : [R for Data Science (free ebook)](https://r4ds.had.co.nz)
+
+
