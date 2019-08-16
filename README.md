@@ -12,6 +12,19 @@ install.packages("tmap")
 install.packages("cartography")
 ```
 
+# Github Pages
+
+The rendered book is visible with GitHub Pages :
+[https://bakaniko.github.io/FOSS4G2019_Geoprocessing_with_R_workshop/](https://bakaniko.github.io/FOSS4G2019_Geoprocessing_with_R_workshop/)
+
 # Licence
 
 This material is available on BY-NC-SA licence.
+
+# Git cloning
+
+ You can clone this repo with this command :
+ 
+ ```
+ git clone https://github.com/Bakaniko/FOSS4G2019_Geoprocessing_with_R_workshop/
+ ```
