@@ -238,118 +238,126 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This document has been made using the <strong>bookdown</strong> package <span class="citation">(Xie <a href="#ref-R-bookdown">2018</a>)</span> and has been inspired by <a href="https://maeltheuliere.github.io/rspatial/index.html">Maël Theulière bookdown tutorial “Les données spatiales avec R” (in French)</a> and <a href="https://geocompr.robinlovelace.net">Geocomputation with R (Lovelace, Nowosad, Muenchow)</a>.</p>
 <p>This book was built with:</p>
 <pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw">session_info</span>()</code></pre>
-<pre><code> setting  value                       
- version  R version 3.4.4 (2018-03-15)
- system   x86_64, linux-gnu           
- ui       X11                         
- language fr_FR                       
- collate  fr_FR.UTF-8                 
+<pre><code>- Session info ----------------------------------------------------------
+ setting  value                       
+ version  R version 3.5.1 (2018-07-02)
+ os       Windows 10 x64              
+ system   x86_64, mingw32             
+ ui       RTerm                       
+ language (EN)                        
+ collate  French_France.1252          
+ ctype    French_France.1252          
  tz       Europe/Paris                
- date     2019-08-10                  
+ date     2019-08-21                  
 
- package      * version   date       source        
- assertthat     0.2.0     2017-04-11 CRAN (R 3.4.2)
- backports      1.1.2     2017-12-13 cran (@1.1.2) 
- base         * 3.4.4     2018-03-16 local         
- base64enc      0.1-3     2015-07-28 CRAN (R 3.4.2)
- bindr          0.1.1     2018-03-13 CRAN (R 3.4.4)
- bindrcpp       0.2.2     2018-03-29 CRAN (R 3.4.4)
- bookdown       0.9       2018-12-21 CRAN (R 3.4.4)
- broom          0.5.0     2018-07-17 CRAN (R 3.4.4)
- cellranger     1.1.0     2016-07-27 CRAN (R 3.4.2)
- class          7.3-14    2015-08-30 CRAN (R 3.4.0)
- classInt       0.2-3     2018-04-16 CRAN (R 3.4.4)
- cli            1.0.1     2018-09-25 CRAN (R 3.4.4)
- colorspace     1.3-2     2016-12-14 CRAN (R 3.4.2)
- compiler       3.4.4     2018-03-16 local         
- crayon         1.3.4     2017-09-16 CRAN (R 3.4.2)
- crosstalk      1.0.0     2016-12-21 CRAN (R 3.4.4)
- datasets     * 3.4.4     2018-03-16 local         
- DBI            1.0.0     2018-05-02 CRAN (R 3.4.4)
- devtools       1.13.6    2018-06-27 CRAN (R 3.4.4)
- dichromat      2.0-0     2013-01-24 CRAN (R 3.4.2)
- digest         0.6.18    2018-10-10 CRAN (R 3.4.4)
- dplyr        * 0.7.6     2018-06-29 CRAN (R 3.4.4)
- e1071          1.7-0     2018-07-28 CRAN (R 3.4.4)
- evaluate       0.12      2018-10-09 CRAN (R 3.4.4)
- forcats      * 0.3.0     2018-02-19 CRAN (R 3.4.4)
- ggplot2      * 3.0.0     2018-07-03 CRAN (R 3.4.4)
- ggspatial    * 1.0.3     2018-12-14 CRAN (R 3.4.4)
- glue           1.3.0     2018-07-17 CRAN (R 3.4.4)
- graphics     * 3.4.4     2018-03-16 local         
- grDevices    * 3.4.4     2018-03-16 local         
- grid           3.4.4     2018-03-16 local         
- gridExtra      2.3       2017-09-09 CRAN (R 3.4.2)
- gtable         0.2.0     2016-02-26 CRAN (R 3.4.2)
- haven          1.1.2     2018-06-27 CRAN (R 3.4.4)
- hms            0.4.2     2018-03-10 CRAN (R 3.4.4)
- htmltools      0.3.6     2017-04-28 CRAN (R 3.4.4)
- htmlwidgets    1.3       2018-09-30 CRAN (R 3.4.4)
- httpuv         1.5.1     2019-04-05 CRAN (R 3.4.4)
- httr           1.3.1     2017-08-20 CRAN (R 3.4.2)
- jsonlite       1.6       2018-12-07 cran (@1.6)   
- KernSmooth     2.23-15   2015-06-29 CRAN (R 3.4.0)
- knitr        * 1.21      2018-12-10 cran (@1.21)  
- later          0.8.0     2019-02-11 CRAN (R 3.4.4)
- lattice        0.20-35   2017-03-25 CRAN (R 3.4.4)
- lazyeval       0.2.1     2017-10-29 CRAN (R 3.4.2)
- leaflet        2.0.1     2018-06-04 CRAN (R 3.4.4)
- lubridate      1.7.4     2018-04-11 CRAN (R 3.4.4)
- lwgeom         0.1-4     2018-01-28 CRAN (R 3.4.4)
- magrittr       1.5       2014-11-22 CRAN (R 3.4.2)
- mapview      * 2.7.0     2019-05-13 CRAN (R 3.4.4)
- memoise        1.1.0     2017-04-21 CRAN (R 3.4.2)
- methods      * 3.4.4     2018-03-16 local         
- mime           0.6       2018-10-05 CRAN (R 3.4.4)
- modelr         0.1.2     2018-05-11 CRAN (R 3.4.4)
- munsell        0.5.0     2018-06-12 CRAN (R 3.4.4)
- nlme           3.1-137   2018-04-07 CRAN (R 3.4.4)
- pillar         1.3.0     2018-07-14 CRAN (R 3.4.4)
- pkgconfig      2.0.2     2018-08-16 CRAN (R 3.4.4)
- plyr           1.8.4     2016-06-08 CRAN (R 3.4.2)
- png            0.1-7     2013-12-03 CRAN (R 3.4.2)
- promises       1.0.1     2018-04-13 CRAN (R 3.4.4)
- purrr        * 0.2.5     2018-05-29 CRAN (R 3.4.4)
- R6             2.3.0     2018-10-04 CRAN (R 3.4.4)
- raster         2.6-7     2017-11-13 CRAN (R 3.4.2)
- RColorBrewer   1.1-2     2014-12-07 CRAN (R 3.4.2)
- Rcpp           1.0.0     2018-11-07 cran (@1.0.0) 
- readr        * 1.1.1     2017-05-16 CRAN (R 3.4.2)
- readxl         1.1.0     2018-04-20 CRAN (R 3.4.4)
- rgdal          1.3-6     2018-10-16 CRAN (R 3.4.4)
- rgeos          0.3-28    2018-06-08 CRAN (R 3.4.4)
- rlang          0.3.0.1   2018-10-25 CRAN (R 3.4.4)
- rmarkdown      1.11      2018-12-08 cran (@1.11)  
- rstudioapi     0.8       2018-10-02 CRAN (R 3.4.4)
- rvest          0.3.2     2016-06-17 CRAN (R 3.4.2)
- satellite      1.0.1     2017-10-18 CRAN (R 3.4.4)
- scales         1.0.0     2018-08-09 CRAN (R 3.4.4)
- sf           * 0.6-3     2018-05-17 CRAN (R 3.4.4)
- shiny          1.3.2     2019-04-22 CRAN (R 3.4.4)
- sp             1.3-1     2018-06-05 CRAN (R 3.4.4)
- spData         0.2.9.4   2018-09-15 CRAN (R 3.4.4)
- stats        * 3.4.4     2018-03-16 local         
- stats4         3.4.4     2018-03-16 local         
- stringi        1.2.4     2018-07-20 CRAN (R 3.4.4)
- stringr      * 1.3.1     2018-05-10 CRAN (R 3.4.4)
- tibble       * 1.4.2     2018-01-22 CRAN (R 3.4.4)
- tidyr        * 0.8.1     2018-05-18 CRAN (R 3.4.4)
- tidyselect     0.2.4     2018-02-26 CRAN (R 3.4.4)
- tidyverse    * 1.2.1     2017-11-14 CRAN (R 3.4.4)
- tmap         * 2.1-1     2018-08-09 CRAN (R 3.4.4)
- tmaptools      2.0-1     2018-08-07 CRAN (R 3.4.4)
- tools          3.4.4     2018-03-16 local         
- units          0.6-0     2018-06-09 CRAN (R 3.4.4)
- utils        * 3.4.4     2018-03-16 local         
- viridis      * 0.5.1     2018-03-29 CRAN (R 3.4.4)
- viridisLite  * 0.3.0     2018-02-01 CRAN (R 3.4.4)
- webshot        0.5.0     2017-11-29 CRAN (R 3.4.4)
- withr          2.1.2     2018-03-15 CRAN (R 3.4.4)
- xfun           0.4       2018-10-23 CRAN (R 3.4.4)
- XML            3.98-1.15 2018-08-10 CRAN (R 3.4.4)
- xml2           1.2.0     2018-01-24 CRAN (R 3.4.4)
- xtable         1.8-2     2016-02-05 CRAN (R 3.4.2)
- yaml           2.2.0     2018-07-25 CRAN (R 3.4.4)</code></pre>
+- Packages --------------------------------------------------------------
+ package      * version    date       lib source                         
+ assertthat     0.2.1      2019-03-21 [1] CRAN (R 3.5.3)                 
+ backports      1.1.4      2019-04-10 [1] CRAN (R 3.5.3)                 
+ base64enc      0.1-3      2015-07-28 [1] CRAN (R 3.5.0)                 
+ bookdown       0.9        2018-12-21 [1] CRAN (R 3.5.2)                 
+ broom          0.5.1      2018-12-05 [1] CRAN (R 3.5.1)                 
+ callr          3.2.0      2019-03-15 [1] CRAN (R 3.5.3)                 
+ cellranger     1.1.0      2016-07-27 [1] CRAN (R 3.5.1)                 
+ class          7.3-15     2019-01-01 [1] CRAN (R 3.5.2)                 
+ classInt       0.3-3      2019-04-26 [1] CRAN (R 3.5.3)                 
+ cli            1.1.0      2019-03-19 [1] CRAN (R 3.5.3)                 
+ codetools      0.2-16     2018-12-24 [1] CRAN (R 3.5.2)                 
+ colorspace     1.4-0      2019-01-13 [1] CRAN (R 3.5.2)                 
+ crayon         1.3.4      2017-09-16 [1] CRAN (R 3.5.1)                 
+ crosstalk      1.0.0      2016-12-21 [1] CRAN (R 3.5.1)                 
+ DBI            1.0.0      2018-05-02 [1] CRAN (R 3.5.1)                 
+ desc           1.2.0      2018-05-01 [1] CRAN (R 3.5.3)                 
+ devtools       2.0.2      2019-04-08 [1] CRAN (R 3.5.3)                 
+ dichromat      2.0-0      2013-01-24 [1] CRAN (R 3.5.2)                 
+ digest         0.6.19     2019-05-20 [1] CRAN (R 3.5.3)                 
+ dplyr        * 0.8.1      2019-05-14 [1] CRAN (R 3.5.3)                 
+ e1071          1.7-2      2019-06-05 [1] CRAN (R 3.5.3)                 
+ evaluate       0.13       2019-02-12 [1] CRAN (R 3.5.2)                 
+ forcats      * 0.4.0      2019-02-17 [1] CRAN (R 3.5.1)                 
+ fs             1.3.1      2019-05-06 [1] CRAN (R 3.5.3)                 
+ generics       0.0.2      2018-11-29 [1] CRAN (R 3.5.1)                 
+ ggplot2      * 3.1.0      2018-10-25 [1] CRAN (R 3.5.1)                 
+ ggspatial    * 1.0.3      2018-12-14 [1] CRAN (R 3.5.2)                 
+ glue           1.3.1.9000 2019-06-21 [1] Github (tidyverse/glue@ea0edcb)
+ gtable         0.2.0      2016-02-26 [1] CRAN (R 3.5.1)                 
+ haven          2.1.0      2019-02-19 [1] CRAN (R 3.5.2)                 
+ here         * 0.1        2017-05-28 [1] CRAN (R 3.5.1)                 
+ hms            0.4.2      2018-03-10 [1] CRAN (R 3.5.1)                 
+ htmltools      0.3.6      2017-04-28 [1] CRAN (R 3.5.1)                 
+ htmlwidgets    1.3        2018-09-30 [1] CRAN (R 3.5.1)                 
+ httpuv         1.5.1      2019-04-05 [1] CRAN (R 3.5.3)                 
+ httr           1.4.0      2018-12-11 [1] CRAN (R 3.5.2)                 
+ jsonlite       1.6        2018-12-07 [1] CRAN (R 3.5.2)                 
+ KernSmooth     2.23-15    2015-06-29 [2] CRAN (R 3.5.1)                 
+ knitr        * 1.21       2018-12-10 [1] CRAN (R 3.5.2)                 
+ later          0.8.0      2019-02-11 [1] CRAN (R 3.5.2)                 
+ lattice        0.20-38    2018-11-04 [1] CRAN (R 3.5.2)                 
+ lazyeval       0.2.1      2017-10-29 [1] CRAN (R 3.5.1)                 
+ leaflet        2.0.2      2018-08-27 [1] CRAN (R 3.5.2)                 
+ lubridate      1.7.4      2018-04-11 [1] CRAN (R 3.5.1)                 
+ lwgeom         0.1-6      2019-02-18 [1] CRAN (R 3.5.2)                 
+ magrittr       1.5        2014-11-22 [1] CRAN (R 3.5.3)                 
+ mapview        2.6.3      2018-12-19 [1] CRAN (R 3.5.2)                 
+ memoise        1.1.0      2017-04-21 [1] CRAN (R 3.5.1)                 
+ mime           0.6        2018-10-05 [1] CRAN (R 3.5.1)                 
+ modelr         0.1.4      2019-02-18 [1] CRAN (R 3.5.2)                 
+ munsell        0.5.0      2018-06-12 [1] CRAN (R 3.5.1)                 
+ nlme           3.1-137    2018-04-07 [2] CRAN (R 3.5.1)                 
+ pillar         1.4.1      2019-05-28 [1] CRAN (R 3.5.3)                 
+ pkgbuild       1.0.3      2019-03-20 [1] CRAN (R 3.5.3)                 
+ pkgconfig      2.0.2      2018-08-16 [1] CRAN (R 3.5.1)                 
+ pkgload        1.0.2      2018-10-29 [1] CRAN (R 3.5.1)                 
+ plyr           1.8.4      2016-06-08 [1] CRAN (R 3.5.1)                 
+ png            0.1-7      2013-12-03 [1] CRAN (R 3.5.0)                 
+ prettyunits    1.0.2      2015-07-13 [1] CRAN (R 3.5.1)                 
+ processx       3.3.1      2019-05-08 [1] CRAN (R 3.5.3)                 
+ promises       1.0.1      2018-04-13 [1] CRAN (R 3.5.1)                 
+ ps             1.3.0      2018-12-21 [1] CRAN (R 3.5.2)                 
+ purrr        * 0.3.2      2019-03-15 [1] CRAN (R 3.5.3)                 
+ R6             2.4.0      2019-02-14 [1] CRAN (R 3.5.1)                 
+ raster         2.8-19     2019-01-30 [1] CRAN (R 3.5.2)                 
+ RColorBrewer   1.1-2      2014-12-07 [1] CRAN (R 3.5.0)                 
+ Rcpp           1.0.1      2019-03-17 [1] CRAN (R 3.5.3)                 
+ readr        * 1.3.1      2018-12-21 [1] CRAN (R 3.5.2)                 
+ readxl         1.2.0      2018-12-19 [1] CRAN (R 3.5.2)                 
+ remotes        2.0.4      2019-04-10 [1] CRAN (R 3.5.3)                 
+ rgdal          1.3-6      2018-10-16 [1] CRAN (R 3.5.2)                 
+ rgeos          0.4-2      2018-11-08 [1] CRAN (R 3.5.1)                 
+ rlang          0.3.4      2019-04-07 [1] CRAN (R 3.5.3)                 
+ rmarkdown      1.11       2018-12-08 [1] CRAN (R 3.5.2)                 
+ rprojroot      1.3-2      2018-01-03 [1] CRAN (R 3.5.1)                 
+ rstudioapi     0.10       2019-03-19 [1] CRAN (R 3.5.3)                 
+ rvest          0.3.2      2016-06-17 [1] CRAN (R 3.5.2)                 
+ satellite      1.0.1      2017-10-18 [1] CRAN (R 3.5.2)                 
+ scales         1.0.0      2018-08-09 [1] CRAN (R 3.5.2)                 
+ sessioninfo    1.1.1      2018-11-05 [1] CRAN (R 3.5.1)                 
+ sf           * 0.7-4      2019-04-25 [1] CRAN (R 3.5.3)                 
+ shiny          1.3.2      2019-04-22 [1] CRAN (R 3.5.3)                 
+ sp             1.3-1      2018-06-05 [1] CRAN (R 3.5.1)                 
+ spData       * 0.3.0      2019-01-07 [1] CRAN (R 3.5.2)                 
+ stringi        1.4.3      2019-03-12 [1] CRAN (R 3.5.3)                 
+ stringr      * 1.4.0      2019-02-10 [1] CRAN (R 3.5.2)                 
+ testthat       2.1.1      2019-04-23 [1] CRAN (R 3.5.3)                 
+ tibble       * 2.1.3      2019-06-06 [1] CRAN (R 3.5.3)                 
+ tidyr        * 0.8.2      2018-10-28 [1] CRAN (R 3.5.1)                 
+ tidyselect     0.2.5      2018-10-11 [1] CRAN (R 3.5.1)                 
+ tidyverse    * 1.2.1      2017-11-14 [1] CRAN (R 3.5.2)                 
+ tmap         * 2.2        2019-01-05 [1] CRAN (R 3.5.2)                 
+ tmaptools      2.0-1      2018-08-07 [1] CRAN (R 3.5.2)                 
+ units          0.6-3      2019-05-03 [1] CRAN (R 3.5.3)                 
+ usethis        1.5.0      2019-04-07 [1] CRAN (R 3.5.3)                 
+ viridisLite    0.3.0      2018-02-01 [1] CRAN (R 3.5.1)                 
+ webshot        0.5.1      2018-09-28 [1] CRAN (R 3.5.2)                 
+ withr          2.1.2      2018-03-15 [1] CRAN (R 3.5.1)                 
+ xfun           0.5.1      2019-02-28 [1] Github (yihui/xfun@d547831)    
+ XML            3.98-1.17  2019-02-08 [1] CRAN (R 3.5.2)                 
+ xml2           1.2.0      2018-01-24 [1] CRAN (R 3.5.1)                 
+ xtable         1.8-4      2019-04-21 [1] CRAN (R 3.5.3)                 
+ yaml           2.2.0      2018-07-25 [1] CRAN (R 3.5.1)                 
+
+[1] D:/Roelandt/Documents/R/win-library/3.5
+[2] C:/Program Files/R/R-3.5.1/library</code></pre>
 
 </div>
 <h3>References</h3>
@@ -378,8 +386,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
-"facebook": true,
+"github": true,
+"facebook": false,
 "twitter": true,
 "google": false,
 "linkedin": false,
@@ -394,8 +402,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
+"link": "https://github.com/Bakaniko/FOSS4G2019_Geoprocessing_with_R_workshop/edit/master/05-summary.Rmd",
+"text": "Edit"
 },
 "history": {
 "link": null,
