@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 4 Geoprocessing in R | R for Geospatial Processing</title>
+  <meta name="description" content="This is the training materials for the R for Geospatial Processing workshop at FOSS4G 2019, Bucarest (Romania).">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 4 Geoprocessing in R | R for Geospatial Processing" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is the training materials for the R for Geospatial Processing workshop at FOSS4G 2019, Bucarest (Romania)." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Geoprocessing in R | R for Geospatial Processing" />
+  
+  <meta name="twitter:description" content="This is the training materials for the R for Geospatial Processing workshop at FOSS4G 2019, Bucarest (Romania)." />
+  
+
+<meta name="author" content="Nicolas Roelandt">
+
+
+<meta name="date" content="2019-08-21">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="r-basics.html">
+<link rel="next" href="maps-are-plots.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.1.17/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.2/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">FOSS4G2019 Geoprocessing with R workshop</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#about-this-document"><i class="fa fa-check"></i><b>1.1</b> About this document</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#why-r"><i class="fa fa-check"></i><b>2.1</b> Why R ?</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="intro.html"><a href="intro.html#r-in-gis"><i class="fa fa-check"></i><b>2.1.1</b> R in GIS</a></li>
+<li class="chapter" data-level="2.1.2" data-path="intro.html"><a href="intro.html#rsaga"><i class="fa fa-check"></i><b>2.1.2</b> RSAGA</a></li>
+<li class="chapter" data-level="2.1.3" data-path="intro.html"><a href="intro.html#grass"><i class="fa fa-check"></i><b>2.1.3</b> GRASS</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#base-r-tidyverse-and-data.table"><i class="fa fa-check"></i><b>2.2</b> Base R, Tidyverse and data.table</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R basics</a><ul>
+<li class="chapter" data-level="3.1" data-path="r-basics.html"><a href="r-basics.html#getting-some-help"><i class="fa fa-check"></i><b>3.1</b> Getting some help</a></li>
+<li class="chapter" data-level="3.2" data-path="r-basics.html"><a href="r-basics.html#where-am-i"><i class="fa fa-check"></i><b>3.2</b> Where am I ?</a></li>
+<li class="chapter" data-level="3.3" data-path="r-basics.html"><a href="r-basics.html#make-calculations"><i class="fa fa-check"></i><b>3.3</b> Make calculations</a></li>
+<li class="chapter" data-level="3.4" data-path="r-basics.html"><a href="r-basics.html#arthmetic-functions"><i class="fa fa-check"></i><b>3.4</b> Arthmetic functions</a></li>
+<li class="chapter" data-level="3.5" data-path="r-basics.html"><a href="r-basics.html#assign-values-to-a-variable"><i class="fa fa-check"></i><b>3.5</b> Assign values to a variable</a></li>
+<li class="chapter" data-level="3.6" data-path="r-basics.html"><a href="r-basics.html#for-loop-and-print"><i class="fa fa-check"></i><b>3.6</b> For loop and print</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="r-basics.html"><a href="r-basics.html#simple-for-loop"><i class="fa fa-check"></i><b>3.6.1</b> Simple for loop</a></li>
+<li class="chapter" data-level="3.6.2" data-path="r-basics.html"><a href="r-basics.html#for-loop-with-indices"><i class="fa fa-check"></i><b>3.6.2</b> For loop with indices</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="r-basics.html"><a href="r-basics.html#data-types"><i class="fa fa-check"></i><b>3.7</b> Data types</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="r-basics.html"><a href="r-basics.html#vectors"><i class="fa fa-check"></i><b>3.7.1</b> Vectors</a></li>
+<li class="chapter" data-level="3.7.2" data-path="r-basics.html"><a href="r-basics.html#dataframes"><i class="fa fa-check"></i><b>3.7.2</b> Dataframes</a></li>
+<li class="chapter" data-level="3.7.3" data-path="r-basics.html"><a href="r-basics.html#add-columns-to-a-dataframe"><i class="fa fa-check"></i><b>3.7.3</b> Add columns to a dataframe</a></li>
+<li class="chapter" data-level="3.7.4" data-path="r-basics.html"><a href="r-basics.html#other-datatypes"><i class="fa fa-check"></i><b>3.7.4</b> Other datatypes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="r-basics.html"><a href="r-basics.html#filtering-subsetting"><i class="fa fa-check"></i><b>3.8</b> Filtering / Subsetting</a><ul>
+<li class="chapter" data-level="3.8.1" data-path="r-basics.html"><a href="r-basics.html#select-variables"><i class="fa fa-check"></i><b>3.8.1</b> Select variables</a></li>
+<li class="chapter" data-level="3.8.2" data-path="r-basics.html"><a href="r-basics.html#filter-values"><i class="fa fa-check"></i><b>3.8.2</b> Filter values</a></li>
+<li class="chapter" data-level="3.8.3" data-path="r-basics.html"><a href="r-basics.html#mixing-selection-and-filtering"><i class="fa fa-check"></i><b>3.8.3</b> Mixing selection and filtering</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="r-basics.html"><a href="r-basics.html#joins"><i class="fa fa-check"></i><b>3.9</b> Joins</a><ul>
+<li class="chapter" data-level="3.9.1" data-path="r-basics.html"><a href="r-basics.html#merge"><i class="fa fa-check"></i><b>3.9.1</b> Merge</a></li>
+<li class="chapter" data-level="3.9.2" data-path="r-basics.html"><a href="r-basics.html#dplyr"><i class="fa fa-check"></i><b>3.9.2</b> Dplyr</a></li>
+</ul></li>
+<li class="chapter" data-level="3.10" data-path="r-basics.html"><a href="r-basics.html#going-further"><i class="fa fa-check"></i><b>3.10</b> Going further</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html"><i class="fa fa-check"></i><b>4</b> Geoprocessing in R</a><ul>
+<li class="chapter" data-level="4.1" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#read-write"><i class="fa fa-check"></i><b>4.1</b> Read / write</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#cycle-hire-dataset"><i class="fa fa-check"></i><b>4.1.1</b> Cycle hire dataset</a></li>
+<li class="chapter" data-level="4.1.2" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#boroughs-of-london"><i class="fa fa-check"></i><b>4.1.2</b> Boroughs of London</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#reprojection"><i class="fa fa-check"></i><b>4.2</b> Reprojection</a></li>
+<li class="chapter" data-level="4.3" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#joins-1"><i class="fa fa-check"></i><b>4.3</b> Joins</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#join-by-attributes"><i class="fa fa-check"></i><b>4.3.1</b> Join by attributes</a></li>
+<li class="chapter" data-level="4.3.2" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#spatial-join"><i class="fa fa-check"></i><b>4.3.2</b> Spatial join</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#aggregation"><i class="fa fa-check"></i><b>4.4</b> Aggregation</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#count"><i class="fa fa-check"></i><b>4.4.1</b> Count</a></li>
+<li class="chapter" data-level="4.4.2" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#sum"><i class="fa fa-check"></i><b>4.4.2</b> Sum</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#centroids"><i class="fa fa-check"></i><b>4.5</b> Centroids</a></li>
+<li class="chapter" data-level="4.6" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#geometric-binary-predicates"><i class="fa fa-check"></i><b>4.6</b> Geometric binary predicates</a></li>
+<li class="chapter" data-level="4.7" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#saving-results"><i class="fa fa-check"></i><b>4.7</b> Saving results</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#writing-data"><i class="fa fa-check"></i><b>4.7.1</b> Writing data</a></li>
+<li class="chapter" data-level="4.7.2" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#check-data"><i class="fa fa-check"></i><b>4.7.2</b> Check data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="maps-are-plots.html"><a href="maps-are-plots.html"><i class="fa fa-check"></i><b>5</b> Maps are plots !</a><ul>
+<li class="chapter" data-level="5.1" data-path="maps-are-plots.html"><a href="maps-are-plots.html#prepare-the-work"><i class="fa fa-check"></i><b>5.1</b> Prepare the work</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="maps-are-plots.html"><a href="maps-are-plots.html#libraries"><i class="fa fa-check"></i><b>5.1.1</b> Libraries</a></li>
+<li class="chapter" data-level="5.1.2" data-path="maps-are-plots.html"><a href="maps-are-plots.html#data"><i class="fa fa-check"></i><b>5.1.2</b> Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="maps-are-plots.html"><a href="maps-are-plots.html#the-plot-way"><i class="fa fa-check"></i><b>5.2</b> The <code>plot()</code> way</a></li>
+<li class="chapter" data-level="5.3" data-path="maps-are-plots.html"><a href="maps-are-plots.html#using-ggplot"><i class="fa fa-check"></i><b>5.3</b> Using {ggplot}</a></li>
+<li class="chapter" data-level="5.4" data-path="maps-are-plots.html"><a href="maps-are-plots.html#using-tmap"><i class="fa fa-check"></i><b>5.4</b> Using {tmap}</a></li>
+<li class="chapter" data-level="5.5" data-path="maps-are-plots.html"><a href="maps-are-plots.html#with-cartography"><i class="fa fa-check"></i><b>5.5</b> With {cartography}</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R for Geospatial Processing</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="geoprocessing-in-r" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Geoprocessing in R</h1>
+<p>For this part, we will use mostly {sf} capabilities. Most spatial functions (if not all) start with the <code>st_</code> (<em>for spatial type</em>) prefix like in <a href="https://postgis.net/docs/manual-2.5/reference.html">PostGIS</a>.</p>
+<p>We will focus on vector data from the {spData} package.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(sf)
+<span class="kw">library</span>(spData)
+<span class="kw">library</span>(here)</code></pre>
+<div id="read-write" class="section level2">
+<h2><span class="header-section-number">4.1</span> Read / write</h2>
+<p>{sf} provides the <code>st_read</code> and <code>st_write</code> functions to access geospatial files. They can operate with any <a href="https://gdal.org/drivers/vector/index.html">vector driver provided by GDAL</a>.</p>
+<p>We will use the data from the {spData}<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> package. Let’s see what it contains :</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">list.files</span>(<span class="kw">system.file</span>(<span class="st">&quot;shapes&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;spData&quot;</span>))</code></pre>
+<pre><code> [1] &quot;auckland.dbf&quot;           &quot;auckland.shp&quot;          
+ [3] &quot;auckland.shx&quot;           &quot;baltim.dbf&quot;            
+ [5] &quot;baltim.shp&quot;             &quot;baltim.shx&quot;            
+ [7] &quot;boston_tracts.dbf&quot;      &quot;boston_tracts.prj&quot;     
+ [9] &quot;boston_tracts.shp&quot;      &quot;boston_tracts.shx&quot;     
+[11] &quot;columbus.dbf&quot;           &quot;columbus.shp&quot;          
+[13] &quot;columbus.shx&quot;           &quot;cycle_hire.geojson&quot;    
+[15] &quot;cycle_hire_osm.geojson&quot; &quot;eire.dbf&quot;              
+[17] &quot;eire.shp&quot;               &quot;eire.shx&quot;              
+[19] &quot;NY8_bna_utm18.gpkg&quot;     &quot;NY8_utm18.dbf&quot;         
+[21] &quot;NY8_utm18.prj&quot;          &quot;NY8_utm18.shp&quot;         
+[23] &quot;NY8_utm18.shx&quot;          &quot;sids.dbf&quot;              
+[25] &quot;sids.shp&quot;               &quot;sids.shx&quot;              
+[27] &quot;wheat.dbf&quot;              &quot;wheat.shp&quot;             
+[29] &quot;wheat.shx&quot;              &quot;world.dbf&quot;             
+[31] &quot;world.gpkg&quot;             &quot;world.prj&quot;             
+[33] &quot;world.shp&quot;              &quot;world.shx&quot;             </code></pre>
+<p>We will work on cycle hires in London so let’s get that data.</p>
+<div id="cycle-hire-dataset" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> Cycle hire dataset</h3>
+<pre class="sourceCode r"><code class="sourceCode r">cycle_hire &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="kw">system.file</span>(<span class="st">&quot;shapes/cycle_hire.geojson&quot;</span>, <span class="dt">package=</span><span class="st">&quot;spData&quot;</span>))</code></pre>
+<pre><code>Reading layer `cycle_hire&#39; from data source `D:\Roelandt\Documents\R\win-library\3.5\spData\shapes\cycle_hire.geojson&#39; using driver `GeoJSON&#39;
+Simple feature collection with 742 features and 5 fields
+geometry type:  POINT
+dimension:      XY
+bbox:           xmin: -0.2367699 ymin: 51.45475 xmax: -0.002275 ymax: 51.54214
+epsg (SRID):    4326
+proj4string:    +proj=longlat +datum=WGS84 +no_defs</code></pre>
+<p>Here we can see a couple of functions :</p>
+<ul>
+<li><code>st_read()</code> is the reading function from {sf}</li>
+<li><code>system.file()</code> is a function that allow us to look for data in packages, independently of the operating system.</li>
+</ul>
+<p>By default, {sf} provides informations when loading the dataset. We can see it contains 742 features and 5 fields. It is points with lat/lon coordinates (we can see it through dataset SRID : 4326). {sf} also provides the bounding box and if possible the proj4string.</p>
+<p>Here is the description of the dataset we can find in the documentation:</p>
+
+<div class="rmdnote">
+<p><strong>cycle_hire dataset</strong></p>
+<p><sub>Description:</sub> Points representing cycle hire points accross London.</p>
+<p><sub>Format:</sub></p>
+<ul>
+<li><strong>id</strong> Id of the hire point</li>
+<li><strong>name</strong> Name of the point</li>
+<li><strong>area</strong> Area they are in</li>
+<li><strong>nbikes</strong> The number of bikes currently parked there<br />
+</li>
+<li><strong>nempty</strong> The number of empty places</li>
+<li><em>geometry</em> sfc_POINT</li>
+</ul>
+<sub>Source</sub>: <a href="cyclehireapp.com/cyclehirelive/cyclehire.csv">cyclehireapp.com/cyclehirelive/cyclehire.csv</a>
+</div>
+
+<p>We can see that there is the bike parked, the count of empty slots but not the total amount of bike slots. Let’s create a new <code>slots</code> column for this.</p>
+<pre class="sourceCode r"><code class="sourceCode r">cycle_hire &lt;-<span class="st"> </span>cycle_hire <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">slots =</span> nbikes <span class="op">+</span><span class="st">  </span>nempty)</code></pre>
+<p>Let’s load polygon data, in this case London’s boroughs stored in the <em>lnd</em> dataset.</p>
+</div>
+<div id="boroughs-of-london" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> Boroughs of London</h3>
+<p>This dataset is contained in a R data format so the loading is different.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(lnd) <span class="co"># load the dataset in memory</span>
+lnd       <span class="co"># call the dataset to visualise the 10 first features</span></code></pre>
+<pre><code>Simple feature collection with 33 features and 7 fields
+geometry type:  MULTIPOLYGON
+dimension:      XY
+bbox:           xmin: -0.5103751 ymin: 51.28676 xmax: 0.3340155 ymax: 51.69187
+epsg (SRID):    4326
+proj4string:    +proj=longlat +datum=WGS84 +no_defs
+First 10 features:
+                   NAME  GSS_CODE  HECTARES NONLD_AREA ONS_INNER SUB_2009
+1  Kingston upon Thames E09000021  3726.117      0.000         F     &lt;NA&gt;
+2               Croydon E09000008  8649.441      0.000         F     &lt;NA&gt;
+3               Bromley E09000006 15013.487      0.000         F     &lt;NA&gt;
+4              Hounslow E09000018  5658.541     60.755         F     &lt;NA&gt;
+5                Ealing E09000009  5554.428      0.000         F     &lt;NA&gt;
+6              Havering E09000016 11445.735    210.763         F     &lt;NA&gt;
+7            Hillingdon E09000017 11570.063      0.000         F     &lt;NA&gt;
+8                Harrow E09000015  5046.330      0.000         F     &lt;NA&gt;
+9                 Brent E09000005  4323.270      0.000         F     &lt;NA&gt;
+10               Barnet E09000003  8674.837      0.000         F     &lt;NA&gt;
+   SUB_2006                       geometry
+1      &lt;NA&gt; MULTIPOLYGON (((-0.3306791 ...
+2      &lt;NA&gt; MULTIPOLYGON (((-0.06402124...
+3      &lt;NA&gt; MULTIPOLYGON (((0.01213094 ...
+4      &lt;NA&gt; MULTIPOLYGON (((-0.2445624 ...
+5      &lt;NA&gt; MULTIPOLYGON (((-0.4118327 ...
+6      &lt;NA&gt; MULTIPOLYGON (((0.1586928 5...
+7      &lt;NA&gt; MULTIPOLYGON (((-0.404072 5...
+8      &lt;NA&gt; MULTIPOLYGON (((-0.404072 5...
+9      &lt;NA&gt; MULTIPOLYGON (((-0.1965687 ...
+10     &lt;NA&gt; MULTIPOLYGON (((-0.1998964 ...</code></pre>
+<p>We can see this dataset contains 33 features and 7 fields, in lat/lon coordinates too.</p>
+
+<div class="rmdnote">
+<p><strong>ldn dataset</strong></p>
+<p>The boroughs of London</p>
+<p>Description : Polygons representing large administrative zones in London</p>
+<p>Format:</p>
+<ul>
+<li><strong>NAME</strong> Borough name</li>
+<li><strong>GSS_CODE</strong> Official code</li>
+<li><strong>HECTARES</strong> How many hectares</li>
+<li><strong>NONLD_AREA</strong> Area outside London</li>
+<li><strong>ONS_INNER</strong> Office for national statistics code</li>
+<li><strong>SUB_2009</strong> Empty column</li>
+<li><strong>SUB_2006</strong> Empty column</li>
+<li><em>geometry</em> sfc_MULTIPOLYGON</li>
+</ul>
+Source : <a href="https://github.com/Robinlovelace/Creating-maps-in-R">https://github.com/Robinlovelace/Creating-maps-in-R</a>
+</div>
+
+<p>In order to ease spatial calculations, let’s reproject them.</p>
+</div>
+</div>
+<div id="reprojection" class="section level2">
+<h2><span class="header-section-number">4.2</span> Reprojection</h2>
+<p>The <a href="https://en.wikipedia.org/wiki/Ordnance_Survey_National_Grid">Ordnance Survey National Grid</a> is the official one for Great Britain. Its SRID is <strong>EPSG:27700</strong>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">cycle_hire_<span class="dv">27700</span> &lt;-<span class="st"> </span>cycle_hire <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">st_transform</span>(<span class="dt">crs =</span> <span class="kw">st_crs</span>(<span class="dv">27700</span>))
+
+london_<span class="dv">27700</span> &lt;-<span class="st"> </span>lnd <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">st_transform</span>(<span class="dt">crs =</span> <span class="kw">st_crs</span>(<span class="dv">27700</span>))</code></pre>
+<p>TO reproject, we used 2 functions:
+- <code>st_transform()</code> for the reprojection
+- <code>st_crs()</code> to get CRS definition from EPSG code</p>
+<p>We also use the pipe operator : <code>%&gt;%</code>, it is useful to pipe data to another function. This is provided by the <a href="https://cran.r-project.org/web/packages/magrittr/index.html">{magrittr} package</a> through {dplyr} and {sf}.</p>
+<p>Now, we can create a quick map to visualize our data. We can use the <code>plot()</code> function to do this. This function is part of base R.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(london_<span class="dv">27700</span><span class="op">$</span>geometry) <span class="co"># we just want to plot the geometry column</span>
+<span class="kw">plot</span>(cycle_hire_<span class="dv">27700</span><span class="op">$</span>geometry, 
+ <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>,  <span class="co"># color</span>
+ <span class="dt">cex =</span> <span class="fl">0.5</span>,    <span class="co"># size of symbol</span>
+ <span class="dt">add =</span> <span class="ot">TRUE</span>)   <span class="co"># important parameter to create multilayer plots</span></code></pre>
+<p><img src="FOSS4G2019_Geoprocessing_with_R_workshop_files/figure-html/quick_plot-1.png" width="672" /></p>
+</div>
+<div id="joins-1" class="section level2">
+<h2><span class="header-section-number">4.3</span> Joins</h2>
+<p>We can use two ways to link those datasets together, by attributes, they share their area name (<code>area</code> and <code>NAME</code>) or spatially. For the sake of the exercice, let’s do both.</p>
+<div id="join-by-attributes" class="section level3">
+<h3><span class="header-section-number">4.3.1</span> Join by attributes</h3>
+<p>Let’s join them with a inner join to see how many have corresponding</p>
+<pre class="sourceCode r"><code class="sourceCode r">cycle_hire_<span class="dv">27700</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">inner_join</span>(
+  london_<span class="dv">27700</span> <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">st_drop_geometry</span>(), <span class="co"># we don&#39;t need the geometry here</span>
+  <span class="dt">by =</span> <span class="kw">c</span>( <span class="st">&quot;area&quot;</span> =<span class="st"> &quot;NAME&quot;</span>)
+  
+)</code></pre>
+<pre><code>Simple feature collection with 33 features and 12 fields
+geometry type:  POINT
+dimension:      XY
+bbox:           xmin: 523978 ymin: 174408 xmax: 537912.7 ymax: 182972.5
+epsg (SRID):    27700
+proj4string:    +proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs
+First 10 features:
+    id                      name        area nbikes nempty slots  GSS_CODE
+1   80             Webber Street   Southwark     10     14    24 E09000028
+2  108      Abbey Orchard Street Westminster      1     27    28 E09000033
+3  118             Rochester Row Westminster     12      1    13 E09000033
+4  221           Horseferry Road Westminster     12      3    15 E09000033
+5  240            Colombo Street   Southwark      9      5    14 E09000028
+6  259 Embankment (Horse Guards) Westminster      0     29    29 E09000033
+7  267            Regency Street Westminster      7     12    19 E09000033
+8  281              Smith Square Westminster      4     12    16 E09000033
+9  299            Vincent Square Westminster      6     11    17 E09000033
+10 302               Putney Pier  Wandsworth     18     10    28 E09000032
+   HECTARES NONLD_AREA ONS_INNER SUB_2009 SUB_2006
+1  2991.340    105.139         T     &lt;NA&gt;     &lt;NA&gt;
+2  2203.005     54.308         T     &lt;NA&gt;     &lt;NA&gt;
+3  2203.005     54.308         T     &lt;NA&gt;     &lt;NA&gt;
+4  2203.005     54.308         T     &lt;NA&gt;     &lt;NA&gt;
+5  2991.340    105.139         T     &lt;NA&gt;     &lt;NA&gt;
+6  2203.005     54.308         T     &lt;NA&gt;     &lt;NA&gt;
+7  2203.005     54.308         T     &lt;NA&gt;     &lt;NA&gt;
+8  2203.005     54.308         T     &lt;NA&gt;     &lt;NA&gt;
+9  2203.005     54.308         T     &lt;NA&gt;     &lt;NA&gt;
+10 3522.022     95.600         T     &lt;NA&gt;     &lt;NA&gt;
+                    geometry
+1  POINT (531832.1 179680.3)
+2  POINT (529756.5 179341.1)
+3  POINT (529528.7 179079.5)
+4      POINT (529880 178976)
+5  POINT (531568.5 180203.8)
+6  POINT (530351.7 180115.2)
+7  POINT (529765.2 178666.4)
+8  POINT (530077.3 179091.2)
+9  POINT (529433.2 178872.2)
+10   POINT (523978 175723.2)</code></pre>
+<p>We can see that only 33 features matched. That’s poor, let’s try this spatially.</p>
+</div>
+<div id="spatial-join" class="section level3">
+<h3><span class="header-section-number">4.3.2</span> Spatial join</h3>
+<p>For this, we will try to provide a <code>GSS_CODE</code> for all cycle hire points. We will regroup the data afterwards.</p>
+<p>For this, we will select only the <code>GSS_CODE</code> column from <code>london_27700</code> with the <code>select</code> function from {dplyr}, the geometry will follow.</p>
+<pre class="sourceCode r"><code class="sourceCode r">cycle_hire_<span class="dv">27700</span> &lt;-<span class="st"> </span>cycle_hire_<span class="dv">27700</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_join</span>(london_<span class="dv">27700</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(GSS_CODE))</code></pre>
+<p>Now if we look at our dataset, there is a <code>GSS_CODE</code> column.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(cycle_hire_<span class="dv">27700</span>)</code></pre>
+<pre><code>[1] &quot;id&quot;       &quot;name&quot;     &quot;area&quot;     &quot;nbikes&quot;   &quot;nempty&quot;   &quot;slots&quot;   
+[7] &quot;GSS_CODE&quot; &quot;geometry&quot;</code></pre>
+<p>How many points doesn’t have a GSS_code ?</p>
+<pre class="sourceCode r"><code class="sourceCode r">cycle_hire_<span class="dv">27700</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">is.na</span>(GSS_CODE))</code></pre>
+<pre><code>Simple feature collection with 1 feature and 7 fields
+geometry type:  POINT
+dimension:      XY
+bbox:           xmin: 534188 ymin: 180210.4 xmax: 534188 ymax: 180210.4
+epsg (SRID):    27700
+proj4string:    +proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs
+   id                name    area nbikes nempty slots GSS_CODE
+1 134 Wapping High Street Wapping     20      0    20     &lt;NA&gt;
+                 geometry
+1 POINT (534188 180210.4)</code></pre>
+<p>Only one, that’s more better than before ! I don’t know well enough London to fix this. But that is not blocking.</p>
+<p>Now to paraphrase Anita Graser : <a href="https://anitagraser.com/2017/06/08/aggregate-all-the-things-qgis-expression-edition/"><span class="citation">(“Aggregate all the things!” <a href="#ref-graserAggregate">2017</a>)</span></a></p>
+</div>
+</div>
+<div id="aggregation" class="section level2">
+<h2><span class="header-section-number">4.4</span> Aggregation</h2>
+<div id="count" class="section level3">
+<h3><span class="header-section-number">4.4.1</span> Count</h3>
+<pre class="sourceCode r"><code class="sourceCode r">cycle_hire_by_area &lt;-<span class="st"> </span>cycle_hire_<span class="dv">27700</span> <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(GSS_CODE)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># remove NAs</span>
+<span class="st">  </span><span class="kw">st_drop_geometry</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># let&#39;s put geometry aside</span>
+<span class="st">  </span><span class="kw">group_by</span>(GSS_CODE) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># group data by GSS_CODE</span>
+<span class="st">  </span><span class="kw">tally</span>(<span class="dt">name =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">sort=</span> <span class="ot">TRUE</span>) <span class="co"># Aggregate</span>
+cycle_hire_by_area</code></pre>
+<pre><code># A tibble: 11 x 2
+   GSS_CODE  count
+   &lt;fct&gt;     &lt;int&gt;
+ 1 E09000033   171
+ 2 E09000030   117
+ 3 E09000020    90
+ 4 E09000032    59
+ 5 E09000013    58
+ 6 E09000007    57
+ 7 E09000022    46
+ 8 E09000028    40
+ 9 E09000019    37
+10 E09000001    35
+11 E09000012    31</code></pre>
+</div>
+<div id="sum" class="section level3">
+<h3><span class="header-section-number">4.4.2</span> Sum</h3>
+<pre class="sourceCode r"><code class="sourceCode r">cycle_hire_by_area_sum &lt;-<span class="st"> </span>cycle_hire_<span class="dv">27700</span> <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(GSS_CODE)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># remove NAs</span>
+<span class="st">  </span><span class="kw">st_drop_geometry</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># let&#39;s put geometry aside</span>
+<span class="st">  </span><span class="kw">group_by</span>(GSS_CODE) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># group data by GSS_CODE</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">sum =</span> <span class="kw">sum</span>(nbikes), <span class="dt">count =</span> <span class="kw">n</span>()) <span class="co"># Aggregate</span>
+cycle_hire_by_area_sum</code></pre>
+<pre><code># A tibble: 11 x 3
+   GSS_CODE    sum count
+   &lt;fct&gt;     &lt;int&gt; &lt;int&gt;
+ 1 E09000001    46    35
+ 2 E09000007   518    57
+ 3 E09000012   606    31
+ 4 E09000013   754    58
+ 5 E09000019   398    37
+ 6 E09000020   872    90
+ 7 E09000022   871    46
+ 8 E09000028   756    40
+ 9 E09000030  1795   117
+10 E09000032  1083    59
+11 E09000033  1336   171</code></pre>
+<p>We could have use the base function <code>aggregate()</code> which works with {sf} objects.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggregate</span>(cycle_hire_<span class="dv">27700</span>[<span class="st">&quot;nbikes&quot;</span>], <span class="dt">by =</span> <span class="kw">list</span>(cycle_hire_<span class="dv">27700</span><span class="op">$</span><span class="st">&quot;GSS_CODE&quot;</span>),
+                       <span class="dt">FUN =</span> sum, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</code></pre>
+<pre><code>Simple feature collection with 11 features and 2 fields
+Attribute-geometry relationship: 0 constant, 1 aggregate, 1 identity
+geometry type:  MULTIPOINT
+dimension:      XY
+bbox:           xmin: 522502 ymin: 174408 xmax: 538733.2 ymax: 184421
+epsg (SRID):    27700
+proj4string:    +proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs
+First 10 features:
+     Group.1 nbikes                       geometry
+1  E09000001     46 MULTIPOINT (531116.1 181358...
+2  E09000007    518 MULTIPOINT (528392.6 183623...
+3  E09000012    606 MULTIPOINT (532312.6 183064...
+4  E09000013    754 MULTIPOINT (522502 178727, ...
+5  E09000019    398 MULTIPOINT (530339.9 183400...
+6  E09000020    872 MULTIPOINT (523651 180842, ...
+7  E09000022    871 MULTIPOINT (528837 176040, ...
+8  E09000028    756 MULTIPOINT (531235.8 179111...
+9  E09000030   1795 MULTIPOINT (533364.4 181747...
+10 E09000032   1083 MULTIPOINT (523978 175723.2...</code></pre>
+<p>If we want to represents our data with proportionnal symbols, we might want to have centroids. {sf} provides two functions in order to do that:</p>
+<ul>
+<li><code>st_centroid()</code></li>
+<li><code>st_point_on_surface()</code></li>
+</ul>
+<p><code>st_point_on_surface()</code> provides a point randomly <strong>in</strong> the entry shape. That can be useful for irregular shapes where the centroid might be outside the shape.</p>
+</div>
+</div>
+<div id="centroids" class="section level2">
+<h2><span class="header-section-number">4.5</span> Centroids</h2>
+<pre class="sourceCode r"><code class="sourceCode r">boroughs_centroids &lt;-<span class="st"> </span>london_<span class="dv">27700</span> <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(NAME, GSS_CODE) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># only keep useful columns</span>
+<span class="st">  </span><span class="kw">st_centroid</span>()</code></pre>
+<p>You can also do buffers and other geometrical operations like <a href="https://r-spatial.github.io/sf/reference/geos_combine.html"><code>st_union()</code></a> to merge geometries</p>
+<div class="figure">
+<img src="images/venn-clip-1.png" alt="Spatial equivalents of logical operators (Lovelace, Nowosad, and Muenchow 2019)" />
+<p class="caption">Spatial equivalents of logical operators <span class="citation">(Lovelace, Nowosad, and Muenchow <a href="#ref-lovelace_geocomputation_2019">2019</a>)</span></p>
+</div>
+</div>
+<div id="geometric-binary-predicates" class="section level2">
+<h2><span class="header-section-number">4.6</span> Geometric binary predicates</h2>
+<p>{sf} provides numerous geometric binary predicates that can be used with the intersection function.</p>
+<ul>
+<li>st_intersects()</li>
+<li>st_disjoint()</li>
+<li>st_touches()</li>
+<li>st_crosses()</li>
+<li>st_within()</li>
+<li>st_contains()</li>
+<li>st_contains_properly()</li>
+<li>st_overlaps()</li>
+<li>st_equals()</li>
+<li>st_covers()</li>
+<li>st_covered_by()</li>
+<li>st_equals_exact()</li>
+<li>st_is_within_distance()</li>
+</ul>
+<p>You can use it alone or with ̀st_join()`.</p>
+<p>For example, if we want to the cycle hires contained in the borough of Wandsworth, we will do like this.</p>
+<pre class="sourceCode r"><code class="sourceCode r">london_<span class="dv">27700</span> <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(NAME <span class="op">==</span><span class="st"> &quot;Wandsworth&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">st_contains</span>(cycle_hire_<span class="dv">27700</span>)</code></pre>
+<pre><code>Sparse geometry binary predicate list of length 1, where the predicate was `contains&#39;
+ 1: 293, 576, 581, 587, 588, 590, 592, 594, 596, 598, ...</code></pre>
+<p>That will return a list of cycle hire points id.</p>
+<p>In contrary, if we want to find in which borough the hire point with id 614 is we need to do this :</p>
+<pre class="sourceCode r"><code class="sourceCode r">cycle_hire_<span class="dv">27700</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(id <span class="op">==</span><span class="st"> &quot;614&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">st_within</span>(london_<span class="dv">27700</span>) <span class="co"># borough at index 22</span></code></pre>
+<pre><code>Sparse geometry binary predicate list of length 1, where the predicate was `within&#39;
+ 1: 22</code></pre>
+<p>To get the borough data, there is some more work to do.</p>
+<pre class="sourceCode r"><code class="sourceCode r">london_<span class="dv">27700</span>[<span class="kw">unlist</span>(cycle_hire_<span class="dv">27700</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(id <span class="op">==</span><span class="st"> &quot;614&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">st_within</span>(london_<span class="dv">27700</span>)),]</code></pre>
+<pre><code>Simple feature collection with 1 feature and 7 fields
+geometry type:  MULTIPOLYGON
+dimension:      XY
+bbox:           xmin: 521054.9 ymin: 170381.5 xmax: 530193.7 ymax: 177893.4
+epsg (SRID):    27700
+proj4string:    +proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs
+         NAME  GSS_CODE HECTARES NONLD_AREA ONS_INNER SUB_2009 SUB_2006
+22 Wandsworth E09000032 3522.022       95.6         T     &lt;NA&gt;     &lt;NA&gt;
+                         geometry
+22 MULTIPOLYGON (((523489.6 17...</code></pre>
+</div>
+<div id="saving-results" class="section level2">
+<h2><span class="header-section-number">4.7</span> Saving results</h2>
+<p>In the first part, we saw that we can read data but we can also write it !</p>
+<div id="writing-data" class="section level3">
+<h3><span class="header-section-number">4.7.1</span> Writing data</h3>
+<p>To write data, we will use the <code>st_write()</code> function.
+It takes the data source name (<em>dsn</em>) as mandatory argument, {sf} will try to find the good driver from the extension (here it is <em>gpkg</em> for GeoPackage).</p>
+
+<div class="rmdwarning">
+<em>st_write()</em> can’t save non geospatial data. So we need to join the data from cycle_hire_by_area_sum to
+the boroughs first.
+</div>
+
+<p>As we want to save it to GeoPackage<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>, we also need to provide a layer name : <em>london_boroughs_27700</em>. Repeat for all data you want to save.</p>
+<pre class="sourceCode r"><code class="sourceCode r">london_<span class="dv">27700</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">left_join</span>(cycle_hire_by_area_sum) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">st_write</span>(
+    <span class="dt">dsn =</span> <span class="kw">here</span>(<span class="st">&quot;foss4g_R_workshop.gpkg&quot;</span>),
+    <span class="dt">layer =</span> <span class="st">&quot;london_boroughs_27700&quot;</span>, 
+    <span class="dt">layer_options =</span> <span class="st">&quot;OVERWRITE=true&quot;</span>)</code></pre>
+<pre><code>Updating layer `london_boroughs_27700&#39; to data source `D:/Roelandt/PERSONNEL/FOSS4G2019_Geoprocessing_with_R_workshop/foss4g_R_workshop.gpkg&#39; using driver `GPKG&#39;
+options:        OVERWRITE=true 
+features:       33
+fields:         9
+geometry type:  Multi Polygon</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">boroughs_centroids <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">left_join</span>(cycle_hire_by_area_sum) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">st_write</span>(
+    <span class="dt">dsn =</span> <span class="kw">here</span>(<span class="st">&quot;foss4g_R_workshop.gpkg&quot;</span>),
+    <span class="dt">layer =</span> <span class="st">&quot;boroughs_centroids_27700&quot;</span>, 
+    <span class="dt">layer_options =</span> <span class="st">&quot;OVERWRITE=true&quot;</span>)</code></pre>
+<pre><code>Updating layer `boroughs_centroids_27700&#39; to data source `D:/Roelandt/PERSONNEL/FOSS4G2019_Geoprocessing_with_R_workshop/foss4g_R_workshop.gpkg&#39; using driver `GPKG&#39;
+options:        OVERWRITE=true 
+features:       33
+fields:         4
+geometry type:  Point</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">cycle_hire_<span class="dv">27700</span> <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">left_join</span>(cycle_hire_by_area_sum) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">st_write</span>(
+    <span class="dt">dsn =</span> <span class="kw">here</span>(<span class="st">&quot;foss4g_R_workshop.gpkg&quot;</span>),
+    <span class="dt">layer =</span> <span class="st">&quot;cycle_hire_27700&quot;</span>,
+    <span class="dt">layer_options =</span> <span class="st">&quot;OVERWRITE=true&quot;</span>)</code></pre>
+<pre><code>Updating layer `cycle_hire_27700&#39; to data source `D:/Roelandt/PERSONNEL/FOSS4G2019_Geoprocessing_with_R_workshop/foss4g_R_workshop.gpkg&#39; using driver `GPKG&#39;
+options:        OVERWRITE=true 
+features:       742
+fields:         9
+geometry type:  Point</code></pre>
+
+<div class="rmdnote">
+<p>We used the <code>here()</code> function as it preserve the project file hierarchy. It works better in Rstudio but it is still useful with Jupyter notebooks.</p>
+<p>The data set where joined by their GSS_CODE. You can specify the “by” statement, but for the sake of readability, it is not show here.</p>
+The <code>layer_options = "OVERWRITE=true"</code> ensure you can write on existing layer, it is optionnal.
+</div>
+
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">here</span>())  <span class="co"># print the project directory</span></code></pre>
+<pre><code>[1] &quot;D:/Roelandt/PERSONNEL/FOSS4G2019_Geoprocessing_with_R_workshop&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">list.files</span>(<span class="kw">here</span>()) <span class="co"># list the files in the project directory</span></code></pre>
+<pre><code> [1] &quot;_bookdown.yml&quot;                                 
+ [2] &quot;_bookdown_files&quot;                               
+ [3] &quot;_output.yml&quot;                                   
+ [4] &quot;01-intro.Rmd&quot;                                  
+ [5] &quot;02-R_basics.Rmd&quot;                               
+ [6] &quot;03-geoprocessing.Rmd&quot;                          
+ [7] &quot;04-maps.Rmd&quot;                                   
+ [8] &quot;05-summary.Rmd&quot;                                
+ [9] &quot;06-references.Rmd&quot;                             
+[10] &quot;book.bib&quot;                                      
+[11] &quot;docs&quot;                                          
+[12] &quot;foss4g_R_workshop.gpkg&quot;                        
+[13] &quot;FOSS4G2019_Geoprocessing_with_R_workshop.Rmd&quot;  
+[14] &quot;FOSS4G2019_Geoprocessing_with_R_workshop.Rproj&quot;
+[15] &quot;FOSS4G2019_Geoprocessing_with_R_workshop_cache&quot;
+[16] &quot;FOSS4G2019_Geoprocessing_with_R_workshop_files&quot;
+[17] &quot;images&quot;                                        
+[18] &quot;index.Rmd&quot;                                     
+[19] &quot;LICENCE.md&quot;                                    
+[20] &quot;packages.bib&quot;                                  
+[21] &quot;preamble.tex&quot;                                  
+[22] &quot;README.md&quot;                                     
+[23] &quot;style.css&quot;                                     </code></pre>
+</div>
+<div id="check-data" class="section level3">
+<h3><span class="header-section-number">4.7.2</span> Check data</h3>
+<p>{sf} provides a <code>st_layers()</code> function that is useful to see the content of a dataset.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">st_layers</span>(<span class="dt">dsn =</span> <span class="kw">here</span>(<span class="st">&quot;foss4g_R_workshop.gpkg&quot;</span>))</code></pre>
+<pre><code>Driver: GPKG 
+Available layers:
+                layer_name geometry_type features fields
+1    london_boroughs_27700 Multi Polygon       33      9
+2 boroughs_centroids_27700         Point       33      4
+3         cycle_hire_27700         Point      742      9</code></pre>
+<p>Now that we have data, let’s do some maps on it in the next chapter !</p>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-graserAggregate">
+<p>“Aggregate all the things!” 2017. <a href="https://anitagraser.com/2017/06/08/aggregate-all-the-things-qgis-expression-edition/">https://anitagraser.com/2017/06/08/aggregate-all-the-things-qgis-expression-edition/</a>.</p>
+</div>
+<div id="ref-lovelace_geocomputation_2019">
+<p>Lovelace, Robin, Jakub Nowosad, and Jannes Muenchow. 2019. <em>Geocomputation with R</em>. CRC Press.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>More details on the datasets here : <a href="https://cran.r-project.org/web/packages/spData/spData.pdf">https://cran.r-project.org/web/packages/spData/spData.pdf</a><a href="geoprocessing-in-r.html#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>Because <a href="http://switchfromshapefile.org/#geopackage">GeoPackage are cool !</a><a href="geoprocessing-in-r.html#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="r-basics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="maps-are-plots.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["FOSS4G2019_Geoprocessing_with_R_workshop.pdf", "FOSS4G2019_Geoprocessing_with_R_workshop.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

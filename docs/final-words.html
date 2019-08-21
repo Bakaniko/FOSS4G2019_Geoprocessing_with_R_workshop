@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 6 Final Words | R for Geospatial Processing</title>
+  <meta name="description" content="This is the training materials for the R for Geospatial Processing workshop at FOSS4G 2019, Bucarest (Romania).">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 6 Final Words | R for Geospatial Processing" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is the training materials for the R for Geospatial Processing workshop at FOSS4G 2019, Bucarest (Romania)." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Final Words | R for Geospatial Processing" />
+  
+  <meta name="twitter:description" content="This is the training materials for the R for Geospatial Processing workshop at FOSS4G 2019, Bucarest (Romania)." />
+  
+
+<meta name="author" content="Nicolas Roelandt">
+
+
+<meta name="date" content="2019-08-21">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="maps-are-plots.html">
+<link rel="next" href="references.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.1.17/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.2/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">FOSS4G2019 Geoprocessing with R workshop</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#about-this-document"><i class="fa fa-check"></i><b>1.1</b> About this document</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#why-r"><i class="fa fa-check"></i><b>2.1</b> Why R ?</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="intro.html"><a href="intro.html#r-in-gis"><i class="fa fa-check"></i><b>2.1.1</b> R in GIS</a></li>
+<li class="chapter" data-level="2.1.2" data-path="intro.html"><a href="intro.html#rsaga"><i class="fa fa-check"></i><b>2.1.2</b> RSAGA</a></li>
+<li class="chapter" data-level="2.1.3" data-path="intro.html"><a href="intro.html#grass"><i class="fa fa-check"></i><b>2.1.3</b> GRASS</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#base-r-tidyverse-and-data.table"><i class="fa fa-check"></i><b>2.2</b> Base R, Tidyverse and data.table</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R basics</a><ul>
+<li class="chapter" data-level="3.1" data-path="r-basics.html"><a href="r-basics.html#getting-some-help"><i class="fa fa-check"></i><b>3.1</b> Getting some help</a></li>
+<li class="chapter" data-level="3.2" data-path="r-basics.html"><a href="r-basics.html#where-am-i"><i class="fa fa-check"></i><b>3.2</b> Where am I ?</a></li>
+<li class="chapter" data-level="3.3" data-path="r-basics.html"><a href="r-basics.html#make-calculations"><i class="fa fa-check"></i><b>3.3</b> Make calculations</a></li>
+<li class="chapter" data-level="3.4" data-path="r-basics.html"><a href="r-basics.html#arthmetic-functions"><i class="fa fa-check"></i><b>3.4</b> Arthmetic functions</a></li>
+<li class="chapter" data-level="3.5" data-path="r-basics.html"><a href="r-basics.html#assign-values-to-a-variable"><i class="fa fa-check"></i><b>3.5</b> Assign values to a variable</a></li>
+<li class="chapter" data-level="3.6" data-path="r-basics.html"><a href="r-basics.html#for-loop-and-print"><i class="fa fa-check"></i><b>3.6</b> For loop and print</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="r-basics.html"><a href="r-basics.html#simple-for-loop"><i class="fa fa-check"></i><b>3.6.1</b> Simple for loop</a></li>
+<li class="chapter" data-level="3.6.2" data-path="r-basics.html"><a href="r-basics.html#for-loop-with-indices"><i class="fa fa-check"></i><b>3.6.2</b> For loop with indices</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="r-basics.html"><a href="r-basics.html#data-types"><i class="fa fa-check"></i><b>3.7</b> Data types</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="r-basics.html"><a href="r-basics.html#vectors"><i class="fa fa-check"></i><b>3.7.1</b> Vectors</a></li>
+<li class="chapter" data-level="3.7.2" data-path="r-basics.html"><a href="r-basics.html#dataframes"><i class="fa fa-check"></i><b>3.7.2</b> Dataframes</a></li>
+<li class="chapter" data-level="3.7.3" data-path="r-basics.html"><a href="r-basics.html#add-columns-to-a-dataframe"><i class="fa fa-check"></i><b>3.7.3</b> Add columns to a dataframe</a></li>
+<li class="chapter" data-level="3.7.4" data-path="r-basics.html"><a href="r-basics.html#other-datatypes"><i class="fa fa-check"></i><b>3.7.4</b> Other datatypes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="r-basics.html"><a href="r-basics.html#filtering-subsetting"><i class="fa fa-check"></i><b>3.8</b> Filtering / Subsetting</a><ul>
+<li class="chapter" data-level="3.8.1" data-path="r-basics.html"><a href="r-basics.html#select-variables"><i class="fa fa-check"></i><b>3.8.1</b> Select variables</a></li>
+<li class="chapter" data-level="3.8.2" data-path="r-basics.html"><a href="r-basics.html#filter-values"><i class="fa fa-check"></i><b>3.8.2</b> Filter values</a></li>
+<li class="chapter" data-level="3.8.3" data-path="r-basics.html"><a href="r-basics.html#mixing-selection-and-filtering"><i class="fa fa-check"></i><b>3.8.3</b> Mixing selection and filtering</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="r-basics.html"><a href="r-basics.html#joins"><i class="fa fa-check"></i><b>3.9</b> Joins</a><ul>
+<li class="chapter" data-level="3.9.1" data-path="r-basics.html"><a href="r-basics.html#merge"><i class="fa fa-check"></i><b>3.9.1</b> Merge</a></li>
+<li class="chapter" data-level="3.9.2" data-path="r-basics.html"><a href="r-basics.html#dplyr"><i class="fa fa-check"></i><b>3.9.2</b> Dplyr</a></li>
+</ul></li>
+<li class="chapter" data-level="3.10" data-path="r-basics.html"><a href="r-basics.html#going-further"><i class="fa fa-check"></i><b>3.10</b> Going further</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html"><i class="fa fa-check"></i><b>4</b> Geoprocessing in R</a><ul>
+<li class="chapter" data-level="4.1" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#read-write"><i class="fa fa-check"></i><b>4.1</b> Read / write</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#cycle-hire-dataset"><i class="fa fa-check"></i><b>4.1.1</b> Cycle hire dataset</a></li>
+<li class="chapter" data-level="4.1.2" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#boroughs-of-london"><i class="fa fa-check"></i><b>4.1.2</b> Boroughs of London</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#reprojection"><i class="fa fa-check"></i><b>4.2</b> Reprojection</a></li>
+<li class="chapter" data-level="4.3" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#joins-1"><i class="fa fa-check"></i><b>4.3</b> Joins</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#join-by-attributes"><i class="fa fa-check"></i><b>4.3.1</b> Join by attributes</a></li>
+<li class="chapter" data-level="4.3.2" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#spatial-join"><i class="fa fa-check"></i><b>4.3.2</b> Spatial join</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#aggregation"><i class="fa fa-check"></i><b>4.4</b> Aggregation</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#count"><i class="fa fa-check"></i><b>4.4.1</b> Count</a></li>
+<li class="chapter" data-level="4.4.2" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#sum"><i class="fa fa-check"></i><b>4.4.2</b> Sum</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#centroids"><i class="fa fa-check"></i><b>4.5</b> Centroids</a></li>
+<li class="chapter" data-level="4.6" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#geometric-binary-predicates"><i class="fa fa-check"></i><b>4.6</b> Geometric binary predicates</a></li>
+<li class="chapter" data-level="4.7" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#saving-results"><i class="fa fa-check"></i><b>4.7</b> Saving results</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#writing-data"><i class="fa fa-check"></i><b>4.7.1</b> Writing data</a></li>
+<li class="chapter" data-level="4.7.2" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#check-data"><i class="fa fa-check"></i><b>4.7.2</b> Check data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="maps-are-plots.html"><a href="maps-are-plots.html"><i class="fa fa-check"></i><b>5</b> Maps are plots !</a><ul>
+<li class="chapter" data-level="5.1" data-path="maps-are-plots.html"><a href="maps-are-plots.html#prepare-the-work"><i class="fa fa-check"></i><b>5.1</b> Prepare the work</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="maps-are-plots.html"><a href="maps-are-plots.html#libraries"><i class="fa fa-check"></i><b>5.1.1</b> Libraries</a></li>
+<li class="chapter" data-level="5.1.2" data-path="maps-are-plots.html"><a href="maps-are-plots.html#data"><i class="fa fa-check"></i><b>5.1.2</b> Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="maps-are-plots.html"><a href="maps-are-plots.html#the-plot-way"><i class="fa fa-check"></i><b>5.2</b> The <code>plot()</code> way</a></li>
+<li class="chapter" data-level="5.3" data-path="maps-are-plots.html"><a href="maps-are-plots.html#using-ggplot"><i class="fa fa-check"></i><b>5.3</b> Using {ggplot}</a></li>
+<li class="chapter" data-level="5.4" data-path="maps-are-plots.html"><a href="maps-are-plots.html#using-tmap"><i class="fa fa-check"></i><b>5.4</b> Using {tmap}</a></li>
+<li class="chapter" data-level="5.5" data-path="maps-are-plots.html"><a href="maps-are-plots.html#with-cartography"><i class="fa fa-check"></i><b>5.5</b> With {cartography}</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R for Geospatial Processing</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="final-words" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Final Words</h1>
+<p>This is just a glimpse what it is possible to do with R for geospatial data analysis. There is more to discover ! You can do spatial analysis and geostatistics like spatial autocorrelation, kriging, etc. If you want to know more about it, please see <a href="https://rspatial.org/analysis/index.html">Spatial Data Science with R website</a>.</p>
+<p>We hope the material does help you get started with R, making it accessible for non staticians or non geographer people (the author is neither of that). R can be use alone as a full GIS, providing tools for data preparation, analysis, mapping and reporting. It can be also use in combination with other GIS tools like GRASS, SAGA or QGIS.</p>
+<p>This document has been made using the <strong>bookdown</strong> package <span class="citation">(Xie <a href="#ref-R-bookdown">2018</a>)</span> and has been inspired by <a href="https://maeltheuliere.github.io/rspatial/index.html">Maël Theulière bookdown tutorial “Les données spatiales avec R” (in French)</a> and <a href="https://geocompr.robinlovelace.net">Geocomputation with R (Lovelace, Nowosad, Muenchow)</a>.</p>
+<p>This book was built with:</p>
+<pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw">session_info</span>()</code></pre>
+<pre><code> setting  value                       
+ version  R version 3.4.4 (2018-03-15)
+ system   x86_64, linux-gnu           
+ ui       X11                         
+ language fr_FR                       
+ collate  fr_FR.UTF-8                 
+ tz       Europe/Paris                
+ date     2019-08-10                  
+
+ package      * version   date       source        
+ assertthat     0.2.0     2017-04-11 CRAN (R 3.4.2)
+ backports      1.1.2     2017-12-13 cran (@1.1.2) 
+ base         * 3.4.4     2018-03-16 local         
+ base64enc      0.1-3     2015-07-28 CRAN (R 3.4.2)
+ bindr          0.1.1     2018-03-13 CRAN (R 3.4.4)
+ bindrcpp       0.2.2     2018-03-29 CRAN (R 3.4.4)
+ bookdown       0.9       2018-12-21 CRAN (R 3.4.4)
+ broom          0.5.0     2018-07-17 CRAN (R 3.4.4)
+ cellranger     1.1.0     2016-07-27 CRAN (R 3.4.2)
+ class          7.3-14    2015-08-30 CRAN (R 3.4.0)
+ classInt       0.2-3     2018-04-16 CRAN (R 3.4.4)
+ cli            1.0.1     2018-09-25 CRAN (R 3.4.4)
+ colorspace     1.3-2     2016-12-14 CRAN (R 3.4.2)
+ compiler       3.4.4     2018-03-16 local         
+ crayon         1.3.4     2017-09-16 CRAN (R 3.4.2)
+ crosstalk      1.0.0     2016-12-21 CRAN (R 3.4.4)
+ datasets     * 3.4.4     2018-03-16 local         
+ DBI            1.0.0     2018-05-02 CRAN (R 3.4.4)
+ devtools       1.13.6    2018-06-27 CRAN (R 3.4.4)
+ dichromat      2.0-0     2013-01-24 CRAN (R 3.4.2)
+ digest         0.6.18    2018-10-10 CRAN (R 3.4.4)
+ dplyr        * 0.7.6     2018-06-29 CRAN (R 3.4.4)
+ e1071          1.7-0     2018-07-28 CRAN (R 3.4.4)
+ evaluate       0.12      2018-10-09 CRAN (R 3.4.4)
+ forcats      * 0.3.0     2018-02-19 CRAN (R 3.4.4)
+ ggplot2      * 3.0.0     2018-07-03 CRAN (R 3.4.4)
+ ggspatial    * 1.0.3     2018-12-14 CRAN (R 3.4.4)
+ glue           1.3.0     2018-07-17 CRAN (R 3.4.4)
+ graphics     * 3.4.4     2018-03-16 local         
+ grDevices    * 3.4.4     2018-03-16 local         
+ grid           3.4.4     2018-03-16 local         
+ gridExtra      2.3       2017-09-09 CRAN (R 3.4.2)
+ gtable         0.2.0     2016-02-26 CRAN (R 3.4.2)
+ haven          1.1.2     2018-06-27 CRAN (R 3.4.4)
+ hms            0.4.2     2018-03-10 CRAN (R 3.4.4)
+ htmltools      0.3.6     2017-04-28 CRAN (R 3.4.4)
+ htmlwidgets    1.3       2018-09-30 CRAN (R 3.4.4)
+ httpuv         1.5.1     2019-04-05 CRAN (R 3.4.4)
+ httr           1.3.1     2017-08-20 CRAN (R 3.4.2)
+ jsonlite       1.6       2018-12-07 cran (@1.6)   
+ KernSmooth     2.23-15   2015-06-29 CRAN (R 3.4.0)
+ knitr        * 1.21      2018-12-10 cran (@1.21)  
+ later          0.8.0     2019-02-11 CRAN (R 3.4.4)
+ lattice        0.20-35   2017-03-25 CRAN (R 3.4.4)
+ lazyeval       0.2.1     2017-10-29 CRAN (R 3.4.2)
+ leaflet        2.0.1     2018-06-04 CRAN (R 3.4.4)
+ lubridate      1.7.4     2018-04-11 CRAN (R 3.4.4)
+ lwgeom         0.1-4     2018-01-28 CRAN (R 3.4.4)
+ magrittr       1.5       2014-11-22 CRAN (R 3.4.2)
+ mapview      * 2.7.0     2019-05-13 CRAN (R 3.4.4)
+ memoise        1.1.0     2017-04-21 CRAN (R 3.4.2)
+ methods      * 3.4.4     2018-03-16 local         
+ mime           0.6       2018-10-05 CRAN (R 3.4.4)
+ modelr         0.1.2     2018-05-11 CRAN (R 3.4.4)
+ munsell        0.5.0     2018-06-12 CRAN (R 3.4.4)
+ nlme           3.1-137   2018-04-07 CRAN (R 3.4.4)
+ pillar         1.3.0     2018-07-14 CRAN (R 3.4.4)
+ pkgconfig      2.0.2     2018-08-16 CRAN (R 3.4.4)
+ plyr           1.8.4     2016-06-08 CRAN (R 3.4.2)
+ png            0.1-7     2013-12-03 CRAN (R 3.4.2)
+ promises       1.0.1     2018-04-13 CRAN (R 3.4.4)
+ purrr        * 0.2.5     2018-05-29 CRAN (R 3.4.4)
+ R6             2.3.0     2018-10-04 CRAN (R 3.4.4)
+ raster         2.6-7     2017-11-13 CRAN (R 3.4.2)
+ RColorBrewer   1.1-2     2014-12-07 CRAN (R 3.4.2)
+ Rcpp           1.0.0     2018-11-07 cran (@1.0.0) 
+ readr        * 1.1.1     2017-05-16 CRAN (R 3.4.2)
+ readxl         1.1.0     2018-04-20 CRAN (R 3.4.4)
+ rgdal          1.3-6     2018-10-16 CRAN (R 3.4.4)
+ rgeos          0.3-28    2018-06-08 CRAN (R 3.4.4)
+ rlang          0.3.0.1   2018-10-25 CRAN (R 3.4.4)
+ rmarkdown      1.11      2018-12-08 cran (@1.11)  
+ rstudioapi     0.8       2018-10-02 CRAN (R 3.4.4)
+ rvest          0.3.2     2016-06-17 CRAN (R 3.4.2)
+ satellite      1.0.1     2017-10-18 CRAN (R 3.4.4)
+ scales         1.0.0     2018-08-09 CRAN (R 3.4.4)
+ sf           * 0.6-3     2018-05-17 CRAN (R 3.4.4)
+ shiny          1.3.2     2019-04-22 CRAN (R 3.4.4)
+ sp             1.3-1     2018-06-05 CRAN (R 3.4.4)
+ spData         0.2.9.4   2018-09-15 CRAN (R 3.4.4)
+ stats        * 3.4.4     2018-03-16 local         
+ stats4         3.4.4     2018-03-16 local         
+ stringi        1.2.4     2018-07-20 CRAN (R 3.4.4)
+ stringr      * 1.3.1     2018-05-10 CRAN (R 3.4.4)
+ tibble       * 1.4.2     2018-01-22 CRAN (R 3.4.4)
+ tidyr        * 0.8.1     2018-05-18 CRAN (R 3.4.4)
+ tidyselect     0.2.4     2018-02-26 CRAN (R 3.4.4)
+ tidyverse    * 1.2.1     2017-11-14 CRAN (R 3.4.4)
+ tmap         * 2.1-1     2018-08-09 CRAN (R 3.4.4)
+ tmaptools      2.0-1     2018-08-07 CRAN (R 3.4.4)
+ tools          3.4.4     2018-03-16 local         
+ units          0.6-0     2018-06-09 CRAN (R 3.4.4)
+ utils        * 3.4.4     2018-03-16 local         
+ viridis      * 0.5.1     2018-03-29 CRAN (R 3.4.4)
+ viridisLite  * 0.3.0     2018-02-01 CRAN (R 3.4.4)
+ webshot        0.5.0     2017-11-29 CRAN (R 3.4.4)
+ withr          2.1.2     2018-03-15 CRAN (R 3.4.4)
+ xfun           0.4       2018-10-23 CRAN (R 3.4.4)
+ XML            3.98-1.15 2018-08-10 CRAN (R 3.4.4)
+ xml2           1.2.0     2018-01-24 CRAN (R 3.4.4)
+ xtable         1.8-2     2016-02-05 CRAN (R 3.4.2)
+ yaml           2.2.0     2018-07-25 CRAN (R 3.4.4)</code></pre>
+
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-R-bookdown">
+<p>Xie, Yihui. 2018. <em>Bookdown: Authoring Books and Technical Documents with R Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown">https://CRAN.R-project.org/package=bookdown</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="maps-are-plots.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["FOSS4G2019_Geoprocessing_with_R_workshop.pdf", "FOSS4G2019_Geoprocessing_with_R_workshop.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

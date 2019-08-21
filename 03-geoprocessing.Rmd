@@ -289,26 +289,31 @@ As we want to save it to  GeoPackage^[Because [GeoPackage are cool !](http://swi
 london_27700 %>% left_join(cycle_hire_by_area_sum) %>%
   st_write(
     dsn = here("foss4g_R_workshop.gpkg"),
-    layer = "london_boroughs_27700")
+    layer = "london_boroughs_27700", 
+    layer_options = "OVERWRITE=true")
 
 boroughs_centroids %>%
   left_join(cycle_hire_by_area_sum) %>%
   st_write(
     dsn = here("foss4g_R_workshop.gpkg"),
-    layer = "boroughs_centroids_27700")
+    layer = "boroughs_centroids_27700", 
+    layer_options = "OVERWRITE=true")
 
 
 cycle_hire_27700 %>%
   left_join(cycle_hire_by_area_sum) %>%
   st_write(
     dsn = here("foss4g_R_workshop.gpkg"),
-    layer = "cycle_hire_27700")
+    layer = "cycle_hire_27700",
+    layer_options = "OVERWRITE=true")
 ```
 
 ```{block2, type='rmdnote'}
 We used the `here()` function as it preserve the project file hierarchy. It works better in Rstudio but it is still useful with Jupyter notebooks.
 
 The data set where joined by their GSS_CODE. You can specify the "by" statement, but for the sake of readability, it is not show here.
+
+The `layer_options = "OVERWRITE=true"` ensure you can write on existing layer, it is optionnal.
 ```
 
 

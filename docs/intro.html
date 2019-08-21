@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 2 Introduction | R for Geospatial Processing</title>
+  <meta name="description" content="This is the training materials for the R for Geospatial Processing workshop at FOSS4G 2019, Bucarest (Romania).">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 2 Introduction | R for Geospatial Processing" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is the training materials for the R for Geospatial Processing workshop at FOSS4G 2019, Bucarest (Romania)." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Introduction | R for Geospatial Processing" />
+  
+  <meta name="twitter:description" content="This is the training materials for the R for Geospatial Processing workshop at FOSS4G 2019, Bucarest (Romania)." />
+  
+
+<meta name="author" content="Nicolas Roelandt">
+
+
+<meta name="date" content="2019-08-21">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="index.html">
+<link rel="next" href="r-basics.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.1.17/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.2/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">FOSS4G2019 Geoprocessing with R workshop</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#about-this-document"><i class="fa fa-check"></i><b>1.1</b> About this document</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#why-r"><i class="fa fa-check"></i><b>2.1</b> Why R ?</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="intro.html"><a href="intro.html#r-in-gis"><i class="fa fa-check"></i><b>2.1.1</b> R in GIS</a></li>
+<li class="chapter" data-level="2.1.2" data-path="intro.html"><a href="intro.html#rsaga"><i class="fa fa-check"></i><b>2.1.2</b> RSAGA</a></li>
+<li class="chapter" data-level="2.1.3" data-path="intro.html"><a href="intro.html#grass"><i class="fa fa-check"></i><b>2.1.3</b> GRASS</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#base-r-tidyverse-and-data.table"><i class="fa fa-check"></i><b>2.2</b> Base R, Tidyverse and data.table</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R basics</a><ul>
+<li class="chapter" data-level="3.1" data-path="r-basics.html"><a href="r-basics.html#getting-some-help"><i class="fa fa-check"></i><b>3.1</b> Getting some help</a></li>
+<li class="chapter" data-level="3.2" data-path="r-basics.html"><a href="r-basics.html#where-am-i"><i class="fa fa-check"></i><b>3.2</b> Where am I ?</a></li>
+<li class="chapter" data-level="3.3" data-path="r-basics.html"><a href="r-basics.html#make-calculations"><i class="fa fa-check"></i><b>3.3</b> Make calculations</a></li>
+<li class="chapter" data-level="3.4" data-path="r-basics.html"><a href="r-basics.html#arthmetic-functions"><i class="fa fa-check"></i><b>3.4</b> Arthmetic functions</a></li>
+<li class="chapter" data-level="3.5" data-path="r-basics.html"><a href="r-basics.html#assign-values-to-a-variable"><i class="fa fa-check"></i><b>3.5</b> Assign values to a variable</a></li>
+<li class="chapter" data-level="3.6" data-path="r-basics.html"><a href="r-basics.html#for-loop-and-print"><i class="fa fa-check"></i><b>3.6</b> For loop and print</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="r-basics.html"><a href="r-basics.html#simple-for-loop"><i class="fa fa-check"></i><b>3.6.1</b> Simple for loop</a></li>
+<li class="chapter" data-level="3.6.2" data-path="r-basics.html"><a href="r-basics.html#for-loop-with-indices"><i class="fa fa-check"></i><b>3.6.2</b> For loop with indices</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="r-basics.html"><a href="r-basics.html#data-types"><i class="fa fa-check"></i><b>3.7</b> Data types</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="r-basics.html"><a href="r-basics.html#vectors"><i class="fa fa-check"></i><b>3.7.1</b> Vectors</a></li>
+<li class="chapter" data-level="3.7.2" data-path="r-basics.html"><a href="r-basics.html#dataframes"><i class="fa fa-check"></i><b>3.7.2</b> Dataframes</a></li>
+<li class="chapter" data-level="3.7.3" data-path="r-basics.html"><a href="r-basics.html#add-columns-to-a-dataframe"><i class="fa fa-check"></i><b>3.7.3</b> Add columns to a dataframe</a></li>
+<li class="chapter" data-level="3.7.4" data-path="r-basics.html"><a href="r-basics.html#other-datatypes"><i class="fa fa-check"></i><b>3.7.4</b> Other datatypes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="r-basics.html"><a href="r-basics.html#filtering-subsetting"><i class="fa fa-check"></i><b>3.8</b> Filtering / Subsetting</a><ul>
+<li class="chapter" data-level="3.8.1" data-path="r-basics.html"><a href="r-basics.html#select-variables"><i class="fa fa-check"></i><b>3.8.1</b> Select variables</a></li>
+<li class="chapter" data-level="3.8.2" data-path="r-basics.html"><a href="r-basics.html#filter-values"><i class="fa fa-check"></i><b>3.8.2</b> Filter values</a></li>
+<li class="chapter" data-level="3.8.3" data-path="r-basics.html"><a href="r-basics.html#mixing-selection-and-filtering"><i class="fa fa-check"></i><b>3.8.3</b> Mixing selection and filtering</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="r-basics.html"><a href="r-basics.html#joins"><i class="fa fa-check"></i><b>3.9</b> Joins</a><ul>
+<li class="chapter" data-level="3.9.1" data-path="r-basics.html"><a href="r-basics.html#merge"><i class="fa fa-check"></i><b>3.9.1</b> Merge</a></li>
+<li class="chapter" data-level="3.9.2" data-path="r-basics.html"><a href="r-basics.html#dplyr"><i class="fa fa-check"></i><b>3.9.2</b> Dplyr</a></li>
+</ul></li>
+<li class="chapter" data-level="3.10" data-path="r-basics.html"><a href="r-basics.html#going-further"><i class="fa fa-check"></i><b>3.10</b> Going further</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html"><i class="fa fa-check"></i><b>4</b> Geoprocessing in R</a><ul>
+<li class="chapter" data-level="4.1" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#read-write"><i class="fa fa-check"></i><b>4.1</b> Read / write</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#cycle-hire-dataset"><i class="fa fa-check"></i><b>4.1.1</b> Cycle hire dataset</a></li>
+<li class="chapter" data-level="4.1.2" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#boroughs-of-london"><i class="fa fa-check"></i><b>4.1.2</b> Boroughs of London</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#reprojection"><i class="fa fa-check"></i><b>4.2</b> Reprojection</a></li>
+<li class="chapter" data-level="4.3" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#joins-1"><i class="fa fa-check"></i><b>4.3</b> Joins</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#join-by-attributes"><i class="fa fa-check"></i><b>4.3.1</b> Join by attributes</a></li>
+<li class="chapter" data-level="4.3.2" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#spatial-join"><i class="fa fa-check"></i><b>4.3.2</b> Spatial join</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#aggregation"><i class="fa fa-check"></i><b>4.4</b> Aggregation</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#count"><i class="fa fa-check"></i><b>4.4.1</b> Count</a></li>
+<li class="chapter" data-level="4.4.2" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#sum"><i class="fa fa-check"></i><b>4.4.2</b> Sum</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#centroids"><i class="fa fa-check"></i><b>4.5</b> Centroids</a></li>
+<li class="chapter" data-level="4.6" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#geometric-binary-predicates"><i class="fa fa-check"></i><b>4.6</b> Geometric binary predicates</a></li>
+<li class="chapter" data-level="4.7" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#saving-results"><i class="fa fa-check"></i><b>4.7</b> Saving results</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#writing-data"><i class="fa fa-check"></i><b>4.7.1</b> Writing data</a></li>
+<li class="chapter" data-level="4.7.2" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#check-data"><i class="fa fa-check"></i><b>4.7.2</b> Check data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="maps-are-plots.html"><a href="maps-are-plots.html"><i class="fa fa-check"></i><b>5</b> Maps are plots !</a><ul>
+<li class="chapter" data-level="5.1" data-path="maps-are-plots.html"><a href="maps-are-plots.html#prepare-the-work"><i class="fa fa-check"></i><b>5.1</b> Prepare the work</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="maps-are-plots.html"><a href="maps-are-plots.html#libraries"><i class="fa fa-check"></i><b>5.1.1</b> Libraries</a></li>
+<li class="chapter" data-level="5.1.2" data-path="maps-are-plots.html"><a href="maps-are-plots.html#data"><i class="fa fa-check"></i><b>5.1.2</b> Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="maps-are-plots.html"><a href="maps-are-plots.html#the-plot-way"><i class="fa fa-check"></i><b>5.2</b> The <code>plot()</code> way</a></li>
+<li class="chapter" data-level="5.3" data-path="maps-are-plots.html"><a href="maps-are-plots.html#using-ggplot"><i class="fa fa-check"></i><b>5.3</b> Using {ggplot}</a></li>
+<li class="chapter" data-level="5.4" data-path="maps-are-plots.html"><a href="maps-are-plots.html#using-tmap"><i class="fa fa-check"></i><b>5.4</b> Using {tmap}</a></li>
+<li class="chapter" data-level="5.5" data-path="maps-are-plots.html"><a href="maps-are-plots.html#with-cartography"><i class="fa fa-check"></i><b>5.5</b> With {cartography}</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R for Geospatial Processing</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="intro" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Introduction</h1>
+<p>R is a programming language dedicated to statistics and data analysis.</p>
+<div class="figure">
+<img src="images/Rlogo.png" alt="R logo" />
+<p class="caption">R logo</p>
+</div>
+<div id="why-r" class="section level2">
+<h2><span class="header-section-number">2.1</span> Why R ?</h2>
+<ul>
+<li>R is tailor made for data science</li>
+<li>Great for reproductibility (scripts, project)</li>
+<li>Do everything from the analysis to the reporting in one tool (thanks to <a href="https://bookdown.org/yihui/rmarkdown/">Rmarkdown</a>)</li>
+</ul>
+<div id="r-in-gis" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> R in GIS</h3>
+<p>Can we do GIS in R ? Yes !</p>
+<p>And we can do R in GIS too !</p>
+<div id="r-spatial" class="section level4">
+<h4><span class="header-section-number">2.1.1.1</span> R spatial</h4>
+<p>There is several tools for handling spatial data in R.
+Historically, there was {sp}, {rgdal}, {rgeos} as core packages for geospatial data handling and dedicated packages for more advanced processing.</p>
+<p>The {sf} package released a couple years ago is a modernisation of thoses packages. It connects directly to GDAL, GEOS and PROJ libraries and implements the <a href="https://en.wikipedia.org/wiki/Simple_Features">Simple Features Access</a> into R. It is compatible with the <a href="https://www.tidyverse.org/">Tidyverse</a> collection of R packages (more on that later).</p>
+<div class="figure">
+<img src="images/sf_logo.gif" alt="{sf} logo" />
+<p class="caption">{sf} logo</p>
+</div>
+<p>See <a href="https://r-spatial.github.io/sf/">r-spatial.github.io/sf</a> for more informations about {sf}.</p>
+</div>
+<div id="r-in-qgis" class="section level4">
+<h4><span class="header-section-number">2.1.1.2</span> R in QGIS</h4>
+<p>Since Sextante first release, you can use R scripts in QGIS Processing toolbox !</p>
+<img src="images/QGIS_r_intro_5.png" alt="R script in QGIS" />
+<p>
+<a href="https://docs.qgis.org/3.4/en/docs/training_manual/processing/r_intro.html">Use R scripts in Processing</a>.
+</p>
+<p>See the <a href="https://docs.qgis.org/3.4/en/docs/training_manual/processing/r_intro.html">R intro in the official documentation</a></p>
+</div>
+<div id="rqgis" class="section level4">
+<h4><span class="header-section-number">2.1.1.3</span> RQGIS</h4>
+<p><a href="https://jannes-m.github.io/RQGIS/index.html">RQGIS</a> is R package that provides access to QGIS functionnality within the R environnement.</p>
+<div class="figure">
+<img src="images/r_qgis_puzzle.png" alt="RQGIS" />
+<p class="caption">RQGIS</p>
+</div>
+</div>
+</div>
+<div id="rsaga" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> RSAGA</h3>
+<p>There is also the <a href="https://github.com/r-spatial/RSAGA">RSAGA</a> package to access SAGA processing tools within R.</p>
+</div>
+<div id="grass" class="section level3">
+<h3><span class="header-section-number">2.1.3</span> GRASS</h3>
+<p>You can use R in GRASS or GRASS in R too : see the <a href="https://grasswiki.osgeo.org/wiki/R_statistics#How_to_use">GRASS wiki</a></p>
+<p>So there is a lot of connexions between R and the GIS world. In the R data science context, it becomes <strong>geodata science</strong> and adds tools to understand and visualize the dataset.</p>
+</div>
+</div>
+<div id="base-r-tidyverse-and-data.table" class="section level2">
+<h2><span class="header-section-number">2.2</span> Base R, Tidyverse and data.table</h2>
+<p>Base R is a set of functions shipped when you install R. Some of those functions were written by different people, not always developers, so even it is powerful it is not homogenous in the syntax or not always efficient (<strong>avoid writing for loops in R</strong>).</p>
+<blockquote>
+<p>As a language, R is like French; it has an elegant core, but every rule comes with a set of ad-hoc exceptions that directly contradict it.
+<a href="http://r.cs.purdue.edu/pub/ecoop12.pdf" class="uri">http://r.cs.purdue.edu/pub/ecoop12.pdf</a></p>
+</blockquote>
+<p>This critisism lead people to create packages to mitigate those issues.</p>
+<p>The Tidyverse is a set of homogenous packages, providing a coherent syntax around verbs (<em>filter</em>, <em>select</em>, etc) and the possibility to pipe operations.</p>
+<img src="images/01_tidyverse_data_science.png" alt="Tidyverse packages" />
+<p>
+<a href="https://lsru.github.io/tv_course/lecture01_intro.html#17">Data processing with R tidyverse - Ginolhac and al. 2017</a>.
+</p>
+<p>It aims to provide readibility and understanding rather than performance (althought it sometimes provides both).</p>
+<p>The Tidyverse is modular as you can load each packages separatly. We’ll use mostly the {dplyr} package in this workshop.</p>
+<p>data.table in the other end was created to be more efficient and can easily <a href="https://h2oai.github.io/db-benchmark/">compete with Python Pandas for example</a>.
+data.table can handle very large datasets. Its syntax is close to Python Pandas but less readible by non programmers.</p>
+<div class="figure">
+<img src="images/data.table.png" alt="data.table logo" />
+<p class="caption">data.table logo</p>
+</div>
+<p>It is not closed worlds. You can mix all of these in your script like <a href="https://suzan.rbind.io/">Suzan Baert</a> explained at <a href="https://youtu.be/vSU3o3c0-7U?t=1923">SatRday Paris 2019</a>.</p>
+<p>You can even mix R with Python if you need to with the Rpackage <a href="https://rstudio.github.io/reticulate/">reticulate</a> or <a href="https://rpy2.readthedocs.io">rpy2</a>.</p>
+<p>This document is based on geodata handling with {sf} and {dplyr} (from the Tidyverse toolset).</p>
+<p>This can be followed on Rstudio or Jupyter R notebook.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="r-basics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["FOSS4G2019_Geoprocessing_with_R_workshop.pdf", "FOSS4G2019_Geoprocessing_with_R_workshop.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

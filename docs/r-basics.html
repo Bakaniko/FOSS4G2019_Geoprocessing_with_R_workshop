@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 3 R basics | R for Geospatial Processing</title>
+  <meta name="description" content="This is the training materials for the R for Geospatial Processing workshop at FOSS4G 2019, Bucarest (Romania).">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 3 R basics | R for Geospatial Processing" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is the training materials for the R for Geospatial Processing workshop at FOSS4G 2019, Bucarest (Romania)." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 R basics | R for Geospatial Processing" />
+  
+  <meta name="twitter:description" content="This is the training materials for the R for Geospatial Processing workshop at FOSS4G 2019, Bucarest (Romania)." />
+  
+
+<meta name="author" content="Nicolas Roelandt">
+
+
+<meta name="date" content="2019-08-21">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="intro.html">
+<link rel="next" href="geoprocessing-in-r.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.2/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.1.17/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.2/leaflet-providers-plugin.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">FOSS4G2019 Geoprocessing with R workshop</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#about-this-document"><i class="fa fa-check"></i><b>1.1</b> About this document</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#why-r"><i class="fa fa-check"></i><b>2.1</b> Why R ?</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="intro.html"><a href="intro.html#r-in-gis"><i class="fa fa-check"></i><b>2.1.1</b> R in GIS</a></li>
+<li class="chapter" data-level="2.1.2" data-path="intro.html"><a href="intro.html#rsaga"><i class="fa fa-check"></i><b>2.1.2</b> RSAGA</a></li>
+<li class="chapter" data-level="2.1.3" data-path="intro.html"><a href="intro.html#grass"><i class="fa fa-check"></i><b>2.1.3</b> GRASS</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="intro.html"><a href="intro.html#base-r-tidyverse-and-data.table"><i class="fa fa-check"></i><b>2.2</b> Base R, Tidyverse and data.table</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="r-basics.html"><a href="r-basics.html"><i class="fa fa-check"></i><b>3</b> R basics</a><ul>
+<li class="chapter" data-level="3.1" data-path="r-basics.html"><a href="r-basics.html#getting-some-help"><i class="fa fa-check"></i><b>3.1</b> Getting some help</a></li>
+<li class="chapter" data-level="3.2" data-path="r-basics.html"><a href="r-basics.html#where-am-i"><i class="fa fa-check"></i><b>3.2</b> Where am I ?</a></li>
+<li class="chapter" data-level="3.3" data-path="r-basics.html"><a href="r-basics.html#make-calculations"><i class="fa fa-check"></i><b>3.3</b> Make calculations</a></li>
+<li class="chapter" data-level="3.4" data-path="r-basics.html"><a href="r-basics.html#arthmetic-functions"><i class="fa fa-check"></i><b>3.4</b> Arthmetic functions</a></li>
+<li class="chapter" data-level="3.5" data-path="r-basics.html"><a href="r-basics.html#assign-values-to-a-variable"><i class="fa fa-check"></i><b>3.5</b> Assign values to a variable</a></li>
+<li class="chapter" data-level="3.6" data-path="r-basics.html"><a href="r-basics.html#for-loop-and-print"><i class="fa fa-check"></i><b>3.6</b> For loop and print</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="r-basics.html"><a href="r-basics.html#simple-for-loop"><i class="fa fa-check"></i><b>3.6.1</b> Simple for loop</a></li>
+<li class="chapter" data-level="3.6.2" data-path="r-basics.html"><a href="r-basics.html#for-loop-with-indices"><i class="fa fa-check"></i><b>3.6.2</b> For loop with indices</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="r-basics.html"><a href="r-basics.html#data-types"><i class="fa fa-check"></i><b>3.7</b> Data types</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="r-basics.html"><a href="r-basics.html#vectors"><i class="fa fa-check"></i><b>3.7.1</b> Vectors</a></li>
+<li class="chapter" data-level="3.7.2" data-path="r-basics.html"><a href="r-basics.html#dataframes"><i class="fa fa-check"></i><b>3.7.2</b> Dataframes</a></li>
+<li class="chapter" data-level="3.7.3" data-path="r-basics.html"><a href="r-basics.html#add-columns-to-a-dataframe"><i class="fa fa-check"></i><b>3.7.3</b> Add columns to a dataframe</a></li>
+<li class="chapter" data-level="3.7.4" data-path="r-basics.html"><a href="r-basics.html#other-datatypes"><i class="fa fa-check"></i><b>3.7.4</b> Other datatypes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="r-basics.html"><a href="r-basics.html#filtering-subsetting"><i class="fa fa-check"></i><b>3.8</b> Filtering / Subsetting</a><ul>
+<li class="chapter" data-level="3.8.1" data-path="r-basics.html"><a href="r-basics.html#select-variables"><i class="fa fa-check"></i><b>3.8.1</b> Select variables</a></li>
+<li class="chapter" data-level="3.8.2" data-path="r-basics.html"><a href="r-basics.html#filter-values"><i class="fa fa-check"></i><b>3.8.2</b> Filter values</a></li>
+<li class="chapter" data-level="3.8.3" data-path="r-basics.html"><a href="r-basics.html#mixing-selection-and-filtering"><i class="fa fa-check"></i><b>3.8.3</b> Mixing selection and filtering</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="r-basics.html"><a href="r-basics.html#joins"><i class="fa fa-check"></i><b>3.9</b> Joins</a><ul>
+<li class="chapter" data-level="3.9.1" data-path="r-basics.html"><a href="r-basics.html#merge"><i class="fa fa-check"></i><b>3.9.1</b> Merge</a></li>
+<li class="chapter" data-level="3.9.2" data-path="r-basics.html"><a href="r-basics.html#dplyr"><i class="fa fa-check"></i><b>3.9.2</b> Dplyr</a></li>
+</ul></li>
+<li class="chapter" data-level="3.10" data-path="r-basics.html"><a href="r-basics.html#going-further"><i class="fa fa-check"></i><b>3.10</b> Going further</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html"><i class="fa fa-check"></i><b>4</b> Geoprocessing in R</a><ul>
+<li class="chapter" data-level="4.1" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#read-write"><i class="fa fa-check"></i><b>4.1</b> Read / write</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#cycle-hire-dataset"><i class="fa fa-check"></i><b>4.1.1</b> Cycle hire dataset</a></li>
+<li class="chapter" data-level="4.1.2" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#boroughs-of-london"><i class="fa fa-check"></i><b>4.1.2</b> Boroughs of London</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#reprojection"><i class="fa fa-check"></i><b>4.2</b> Reprojection</a></li>
+<li class="chapter" data-level="4.3" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#joins-1"><i class="fa fa-check"></i><b>4.3</b> Joins</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#join-by-attributes"><i class="fa fa-check"></i><b>4.3.1</b> Join by attributes</a></li>
+<li class="chapter" data-level="4.3.2" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#spatial-join"><i class="fa fa-check"></i><b>4.3.2</b> Spatial join</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#aggregation"><i class="fa fa-check"></i><b>4.4</b> Aggregation</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#count"><i class="fa fa-check"></i><b>4.4.1</b> Count</a></li>
+<li class="chapter" data-level="4.4.2" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#sum"><i class="fa fa-check"></i><b>4.4.2</b> Sum</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#centroids"><i class="fa fa-check"></i><b>4.5</b> Centroids</a></li>
+<li class="chapter" data-level="4.6" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#geometric-binary-predicates"><i class="fa fa-check"></i><b>4.6</b> Geometric binary predicates</a></li>
+<li class="chapter" data-level="4.7" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#saving-results"><i class="fa fa-check"></i><b>4.7</b> Saving results</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#writing-data"><i class="fa fa-check"></i><b>4.7.1</b> Writing data</a></li>
+<li class="chapter" data-level="4.7.2" data-path="geoprocessing-in-r.html"><a href="geoprocessing-in-r.html#check-data"><i class="fa fa-check"></i><b>4.7.2</b> Check data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="maps-are-plots.html"><a href="maps-are-plots.html"><i class="fa fa-check"></i><b>5</b> Maps are plots !</a><ul>
+<li class="chapter" data-level="5.1" data-path="maps-are-plots.html"><a href="maps-are-plots.html#prepare-the-work"><i class="fa fa-check"></i><b>5.1</b> Prepare the work</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="maps-are-plots.html"><a href="maps-are-plots.html#libraries"><i class="fa fa-check"></i><b>5.1.1</b> Libraries</a></li>
+<li class="chapter" data-level="5.1.2" data-path="maps-are-plots.html"><a href="maps-are-plots.html#data"><i class="fa fa-check"></i><b>5.1.2</b> Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="maps-are-plots.html"><a href="maps-are-plots.html#the-plot-way"><i class="fa fa-check"></i><b>5.2</b> The <code>plot()</code> way</a></li>
+<li class="chapter" data-level="5.3" data-path="maps-are-plots.html"><a href="maps-are-plots.html#using-ggplot"><i class="fa fa-check"></i><b>5.3</b> Using {ggplot}</a></li>
+<li class="chapter" data-level="5.4" data-path="maps-are-plots.html"><a href="maps-are-plots.html#using-tmap"><i class="fa fa-check"></i><b>5.4</b> Using {tmap}</a></li>
+<li class="chapter" data-level="5.5" data-path="maps-are-plots.html"><a href="maps-are-plots.html#with-cartography"><i class="fa fa-check"></i><b>5.5</b> With {cartography}</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R for Geospatial Processing</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="r-basics" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> R basics</h1>
+<p>How to manipulate data in R ? How to install and load a package ? Let’s see..</p>
+<div id="getting-some-help" class="section level2">
+<h2><span class="header-section-number">3.1</span> Getting some help</h2>
+</div>
+<div id="where-am-i" class="section level2">
+<h2><span class="header-section-number">3.2</span> Where am I ?</h2>
+<p>To get the current directory, use <code>getwd()</code> :</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">getwd</span>()</code></pre>
+<pre><code>[1] &quot;D:/Roelandt/PERSONNEL/FOSS4G2019_Geoprocessing_with_R_workshop&quot;</code></pre>
+<p>If you need to change the directory, there is <code>setwd()</code></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setwd</span>(<span class="st">&quot;path/to/my/directory&quot;</span>)</code></pre>
+<p>If you use Rstudio, I can only recommand to work with a <a href="https://www.tidyverse.org/articles/2017/12/workflow-vs-script/">project workflow</a> to avoid path issues on another computer.</p>
+</div>
+<div id="make-calculations" class="section level2">
+<h2><span class="header-section-number">3.3</span> Make calculations</h2>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span><span class="op">+</span><span class="dv">1</span></code></pre>
+<pre><code>[1] 2</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">3</span> <span class="op">*</span><span class="st"> </span><span class="dv">4</span></code></pre>
+<pre><code>[1] 12</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">7</span><span class="op">/</span><span class="dv">3</span></code></pre>
+<pre><code>[1] 2.333333</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">7</span><span class="op">%%</span><span class="dv">3</span> <span class="co"># rest of the division</span></code></pre>
+<pre><code>[1] 1</code></pre>
+</div>
+<div id="arthmetic-functions" class="section level2">
+<h2><span class="header-section-number">3.4</span> Arthmetic functions</h2>
+<p>R provides a lot of arithmetic functions by default :</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(<span class="fl">4.0</span>)</code></pre>
+<pre><code>[1] 2</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">abs</span>(<span class="op">-</span><span class="dv">625</span>)</code></pre>
+<pre><code>[1] 625</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">log10</span>(<span class="dv">12900</span>)</code></pre>
+<pre><code>[1] 4.11059</code></pre>
+</div>
+<div id="assign-values-to-a-variable" class="section level2">
+<h2><span class="header-section-number">3.5</span> Assign values to a variable</h2>
+<pre class="sourceCode r"><code class="sourceCode r">fruits &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apples&quot;</span>, <span class="st">&quot;pears&quot;</span>, <span class="st">&quot;lemons&quot;</span>)
+fruits</code></pre>
+<pre><code>[1] &quot;apples&quot; &quot;pears&quot;  &quot;lemons&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">quantities &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>)
+<span class="kw">print</span>(quantities)</code></pre>
+<pre><code>[1] 3 2 1</code></pre>
+
+<div class="rmdcaution">
+Indices in R start at 1 !
+</div>
+
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(fruits[<span class="dv">1</span>])</code></pre>
+<pre><code>[1] &quot;apples&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(fruits[<span class="dv">0</span>]) <span class="co"># returns nothing</span></code></pre>
+<pre><code>character(0)</code></pre>
+</div>
+<div id="for-loop-and-print" class="section level2">
+<h2><span class="header-section-number">3.6</span> For loop and print</h2>
+<div id="simple-for-loop" class="section level3">
+<h3><span class="header-section-number">3.6.1</span> Simple for loop</h3>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span> (fruit <span class="cf">in</span> fruits) {
+  <span class="kw">print</span>(fruit)
+}</code></pre>
+<pre><code>[1] &quot;apples&quot;
+[1] &quot;pears&quot;
+[1] &quot;lemons&quot;</code></pre>
+</div>
+<div id="for-loop-with-indices" class="section level3">
+<h3><span class="header-section-number">3.6.2</span> For loop with indices</h3>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span> (x <span class="cf">in</span> <span class="kw">seq</span>(<span class="kw">length</span>(fruits))) {
+  <span class="kw">print</span>(<span class="kw">paste0</span>(<span class="st">&quot;I have &quot;</span>, quantities[x],<span class="st">&quot; &quot;</span>, fruits[x],<span class="st">&quot;.&quot;</span>))
+}</code></pre>
+<pre><code>[1] &quot;I have 3 apples.&quot;
+[1] &quot;I have 2 pears.&quot;
+[1] &quot;I have 1 lemons.&quot;</code></pre>
+
+<div class="rmdwarning">
+For loops in R are possible but not memory efficient.
+So if you need to walk through a large amount of data, please consider using functions instead.
+</div>
+
+</div>
+</div>
+<div id="data-types" class="section level2">
+<h2><span class="header-section-number">3.7</span> Data types</h2>
+<div id="vectors" class="section level3">
+<h3><span class="header-section-number">3.7.1</span> Vectors</h3>
+<p><code>fruits</code> and <code>quantities</code> are character and numeric vectors.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(fruits)</code></pre>
+<pre><code>[1] &quot;character&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(quantities)</code></pre>
+<pre><code>[1] &quot;numeric&quot;</code></pre>
+<p>Vectors are the most basic R data object. There is six types of atomic vectors: logical, integer, double, complex, character and raw. You can’t mix types in vectors.</p>
+</div>
+<div id="dataframes" class="section level3">
+<h3><span class="header-section-number">3.7.2</span> Dataframes</h3>
+<p>Another frequently encountered data type is the <strong>dataframe</strong>. It is a collection data organized by rows and columns. Columns that can be of different types. Rows don’t have to unique but having <a href="https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html">tidy data</a> is known as a good pratice :</p>
+<blockquote>
+<ol style="list-style-type: decimal">
+<li>Each variable forms a column.</li>
+<li>Each observation forms a row.</li>
+<li>Each type of observational unit forms a table.</li>
+</ol>
+</blockquote>
+<p>Good thing is, in GIS, we tend to have tidy data, right ?</p>
+<p>How to create a data frame from our vectors ?</p>
+<div id="with-cbind.data.frame" class="section level4">
+<h4><span class="header-section-number">3.7.2.1</span> With <code>cbind.data.frame()</code></h4>
+<pre class="sourceCode r"><code class="sourceCode r">df1 &lt;-<span class="st"> </span><span class="kw">cbind.data.frame</span>(fruits, quantities) <span class="co"># column binding</span>
+<span class="kw">print</span>(df1)</code></pre>
+<pre><code>  fruits quantities
+1 apples          3
+2  pears          2
+3 lemons          1</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(df1)</code></pre>
+<pre><code>[1] &quot;data.frame&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">df2 &lt;-<span class="st"> </span><span class="kw">as_data_frame</span>(fruits) <span class="co"># column binding</span>
+<span class="kw">colnames</span>(df2) &lt;-<span class="st"> &quot;fruits&quot;</span> <span class="co"># change column name</span>
+<span class="kw">print</span>(df2)</code></pre>
+<pre><code># A tibble: 3 x 1
+  fruits
+  &lt;chr&gt; 
+1 apples
+2 pears 
+3 lemons</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(df2)</code></pre>
+<pre><code>[1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+
+<div class="rmdnote">
+Tibbles (<code>tbl</code> // <code>tbl_df</code>) are dataframes on steroids from the tidyverse.
+</div>
+
+</div>
+</div>
+<div id="add-columns-to-a-dataframe" class="section level3">
+<h3><span class="header-section-number">3.7.3</span> Add columns to a dataframe</h3>
+<pre class="sourceCode r"><code class="sourceCode r">df3 &lt;-<span class="st"> </span><span class="kw">cbind</span>(df2, <span class="co"># entry dataframe</span>
+             quantities, <span class="co"># column with quantities</span>
+             <span class="dt">price =</span> <span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">9</span>) <span class="co"># new colum with price</span>
+             )
+df3</code></pre>
+<pre><code>  fruits quantities price
+1 apples          3     4
+2  pears          2     7
+3 lemons          1     9</code></pre>
+</div>
+<div id="other-datatypes" class="section level3">
+<h3><span class="header-section-number">3.7.4</span> Other datatypes</h3>
+<ul>
+<li>Matrices</li>
+<li>Lists (<code>list()</code>) : collection of objects of different kind</li>
+</ul>
+
+<div class="rmdcaution">
+List in R are not like lists in Python.
+</div>
+
+</div>
+</div>
+<div id="filtering-subsetting" class="section level2">
+<h2><span class="header-section-number">3.8</span> Filtering / Subsetting</h2>
+<p>In R, you can subset your data by value or variable. There is several way to do it, here is some of them.</p>
+<div id="select-variables" class="section level3">
+<h3><span class="header-section-number">3.8.1</span> Select variables</h3>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(df3)</code></pre>
+<pre><code>[1] &quot;fruits&quot;     &quot;quantities&quot; &quot;price&quot;     </code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">df3[, <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</code></pre>
+<pre><code>  quantities price
+1          3     4
+2          2     7
+3          1     9</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">df3[, <span class="kw">c</span>(<span class="st">&quot;fruits&quot;</span>,<span class="st">&quot;price&quot;</span>)]</code></pre>
+<pre><code>  fruits price
+1 apples     4
+2  pears     7
+3 lemons     9</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">df3 <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># pipe symbol</span>
+<span class="st">  </span><span class="kw">select</span>(fruits, quantities) <span class="co"># select from dplyr</span></code></pre>
+<pre><code>  fruits quantities
+1 apples          3
+2  pears          2
+3 lemons          1</code></pre>
+</div>
+<div id="filter-values" class="section level3">
+<h3><span class="header-section-number">3.8.2</span> Filter values</h3>
+<pre class="sourceCode r"><code class="sourceCode r">df3[df3[<span class="st">&quot;price&quot;</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>,] <span class="co"># don&#39;t forget the column comma</span></code></pre>
+<pre><code>  fruits quantities price
+2  pears          2     7
+3 lemons          1     9</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">df3 <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(quantities <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2</span>)</code></pre>
+<pre><code>  fruits quantities price
+1 apples          3     4
+2  pears          2     7</code></pre>
+</div>
+<div id="mixing-selection-and-filtering" class="section level3">
+<h3><span class="header-section-number">3.8.3</span> Mixing selection and filtering</h3>
+<pre class="sourceCode r"><code class="sourceCode r">df3[df3[<span class="st">&quot;price&quot;</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>, <span class="dv">1</span>] <span class="co"># select the prices &gt; 5</span></code></pre>
+<pre><code>[1] &quot;pears&quot;  &quot;lemons&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">df3 <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(price <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># filter first</span>
+<span class="st">  </span><span class="kw">select</span>(fruits)         <span class="co"># select second</span></code></pre>
+<pre><code>  fruits
+1  pears
+2 lemons</code></pre>
+</div>
+</div>
+<div id="joins" class="section level2">
+<h2><span class="header-section-number">3.9</span> Joins</h2>
+<p>Let’s create a new dataframe to join</p>
+<pre class="sourceCode r"><code class="sourceCode r">df4 &lt;-<span class="st"> </span><span class="kw">cbind.data.frame</span>(<span class="dt">fruits =</span> fruits, <span class="dt">buyer =</span> <span class="kw">c</span>(<span class="st">&quot;Sophie&quot;</span>, <span class="st">&quot;Marc&quot;</span>, <span class="st">&quot;Nathan&quot;</span>))
+df4</code></pre>
+<pre><code>  fruits  buyer
+1 apples Sophie
+2  pears   Marc
+3 lemons Nathan</code></pre>
+<div id="merge" class="section level3">
+<h3><span class="header-section-number">3.9.1</span> Merge</h3>
+<pre class="sourceCode r"><code class="sourceCode r">merged_df &lt;-<span class="st"> </span><span class="kw">merge</span>(<span class="dt">x =</span> df3, <span class="dt">y =</span> df4, <span class="dt">by =</span> <span class="st">&quot;fruits&quot;</span>, <span class="dt">all =</span> <span class="ot">TRUE</span>) <span class="co"># OUTER JOIN</span>
+merged_df</code></pre>
+<pre><code>  fruits quantities price  buyer
+1 apples          3     4 Sophie
+2 lemons          1     9 Nathan
+3  pears          2     7   Marc</code></pre>
+<p>See that <a href="https://stackoverflow.com/questions/1299871/how-to-join-merge-data-frames-inner-outer-left-right">answer on StackOverflow</a> for more details on left, right, inner and outer joins with <code>merge()</code>.</p>
+</div>
+<div id="dplyr" class="section level3">
+<h3><span class="header-section-number">3.9.2</span> Dplyr</h3>
+<pre class="sourceCode r"><code class="sourceCode r">merged_df &lt;-<span class="st"> </span>df3 <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">full_join</span>(df4) <span class="co">## or full_join(df4, by = &quot;fruits&quot;)</span>
+
+merged_df</code></pre>
+<pre><code>  fruits quantities price  buyer
+1 apples          3     4 Sophie
+2  pears          2     7   Marc
+3 lemons          1     9 Nathan</code></pre>
+<p>See the <a href="https://dplyr.tidyverse.org/reference/join.html">documentation of {dplyr}</a> for more information on joins.</p>
+</div>
+</div>
+<div id="going-further" class="section level2">
+<h2><span class="header-section-number">3.10</span> Going further</h2>
+<p>If you want to go further in the learning of the R language and the Tidyverse tools, there is a lot of resources online. You might want to start by those :</p>
+<ul>
+<li>Base R : <a href="https://colinfay.me/r-manuals/">R manuals</a></li>
+<li>Tidyverse : <a href="https://r4ds.had.co.nz">R for Data Science (free ebook)</a></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="geoprocessing-in-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["FOSS4G2019_Geoprocessing_with_R_workshop.pdf", "FOSS4G2019_Geoprocessing_with_R_workshop.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

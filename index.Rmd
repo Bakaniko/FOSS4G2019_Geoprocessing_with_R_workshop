@@ -2,13 +2,16 @@
 title: "R for Geospatial Processing"
 author: "Nicolas Roelandt"
 date: "`r Sys.Date()`"
-site: bookdown::bookdown_site
+bibliography:
+- book.bib
+- packages.bib
+description: This is the training materials for the **R for Geospatial Processing**
+  workshop at FOSS4G 2019, Bucarest (Romania).
 documentclass: book
-bibliography: [book.bib, packages.bib]
-biblio-style: apalike
-link-citations: yes
-description: "This is the training materials for the **R for Geospatial Processing** workshop at FOSS4G 2019, Bucarest (Romania)."
 edit: https://github.com/Bakaniko/FOSS4G2019_Geoprocessing_with_R_workshop/edit/master/%s
+link-citations: yes
+site: bookdown::bookdown_site
+biblio-style: apalike
 ---
 
 # Prerequisites
