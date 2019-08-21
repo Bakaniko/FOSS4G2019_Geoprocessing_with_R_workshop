@@ -8,6 +8,7 @@ bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 description: "This is the training materials for the **R for Geospatial Processing** workshop at FOSS4G 2019, Bucarest (Romania)."
+edit: https://github.com/Bakaniko/FOSS4G2019_Geoprocessing_with_R_workshop/edit/master/%s
 ---
 
 # Prerequisites
@@ -30,9 +31,14 @@ install.packages("cartography")
 ```
 
 ## About this document
+
 This document had been written with the [R Bookdown package](https://bookdown.org/yihui/bookdown) and [Rstudio](https://www.rstudio.com). You can use the editor of your choice to follow the instruction, be careful on the path given by the {here} package.
 
 To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.name/tinytex/>.
+
+You can contribute to this document on GitHub :
+
+[https://github.com/Bakaniko/FOSS4G2019_Geoprocessing_with_R_workshop](https://github.com/Bakaniko/FOSS4G2019_Geoprocessing_with_R_workshop)
 
 ```{r setup, eval=T,echo=F,message=F,warning=F}
 knitr::opts_chunk$set(cache=T,echo=T,comment="",message=F,warning = F)
