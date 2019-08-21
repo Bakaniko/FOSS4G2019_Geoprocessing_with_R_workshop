@@ -6,7 +6,7 @@ bookdown::gitbook:
         <li><a href="./">FOSS4G2019 Geoprocessing with R workshop</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-    #download: ["pdf", "epub"]
+    download: []
     edit: https://github.com/Bakaniko/FOSS4G2019_Geoprocessing_with_R_workshop/edit/master/%s
     sharing:
       github: yes
