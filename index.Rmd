@@ -21,6 +21,12 @@ No knowledge of R is required. A minimal knowledge of [(R)mardown](https://rmark
 
 Please install R on your system and the following libraries.
 
+Please follow installation instructions from the [CRAN projet](https://cran.r-project.org/).
+
+The {sf} library needs several geospatial core libraries (GDAL, GEOS, PROJ) so please follow [{sf} installation instructions](https://github.com/r-spatial/sf/) to be sure to have those.
+
+For Ubuntu users, ThinkR published a blogpost about [the installation of r 3 5 on Ubuntu 18.04 LTS and tips for spatial packages](https://rtask.thinkr.fr/installation-of-r-3-5-on-ubuntu-18-04-lts-and-tips-for-spatial-packages/)
+
 
 ```{r needed_libraries, eval=FALSE}
 install.packages("dplyr")
@@ -52,11 +58,7 @@ library(spData)
 library(tidyverse)
 library(sf)
 library(tmap)
-# library(viridis)
-# library(scales)
-# library(cartogram)
 library(ggspatial)
-# library(lwgeom)
 # library(mapview)
 theme_set(theme_gray())
 tmap_mode("plot")

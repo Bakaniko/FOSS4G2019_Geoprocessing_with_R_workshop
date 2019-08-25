@@ -25,7 +25,7 @@
 <meta name="author" content="Nicolas Roelandt">
 
 
-<meta name="date" content="2019-08-21">
+<meta name="date" content="2019-08-25">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -224,13 +224,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">R for Geospatial Processing</h1>
 <p class="author"><em>Nicolas Roelandt</em></p>
-<p class="date"><em>2019-08-21</em></p>
+<p class="date"><em>2019-08-25</em></p>
 </div>
 <div id="prerequisites" class="section level1">
 <h1><span class="header-section-number">Chapter 1</span> Prerequisites</h1>
 <p>This workshop is designed for the attendance of FOSS4G 2019. So basics knowledge in GIS is expected (simple features, projections and CRS, geometrical operations, etc.).</p>
 <p>No knowledge of R is required. A minimal knowledge of <a href="https://rmarkdown.rstudio.com/">(R)mardown</a> will be a plus to take notes.</p>
 <p>Please install R on your system and the following libraries.</p>
+<p>Please follow installation instructions from the <a href="https://cran.r-project.org/">CRAN projet</a>.</p>
+<p>The {sf} library needs several geospatial core libraries (GDAL, GEOS, PROJ) so please follow <a href="https://github.com/r-spatial/sf/">{sf} installation instructions</a> to be sure to have those.</p>
+<p>For Ubuntu users, ThinkR published a blogpost about <a href="https://rtask.thinkr.fr/installation-of-r-3-5-on-ubuntu-18-04-lts-and-tips-for-spatial-packages/">the installation of r 3 5 on Ubuntu 18.04 LTS and tips for spatial packages</a></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)
 <span class="kw">install.packages</span>(<span class="st">&quot;sf&quot;</span>)
 <span class="kw">install.packages</span>(<span class="st">&quot;spData&quot;</span>)
