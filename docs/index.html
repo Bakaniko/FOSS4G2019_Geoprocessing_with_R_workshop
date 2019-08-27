@@ -25,7 +25,7 @@
 <meta name="author" content="Nicolas Roelandt">
 
 
-<meta name="date" content="2019-08-25">
+<meta name="date" content="2019-08-27">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -68,7 +68,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(title);
+  { content: attr(data-line-number);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -224,7 +224,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">R for Geospatial Processing</h1>
 <p class="author"><em>Nicolas Roelandt</em></p>
-<p class="date"><em>2019-08-25</em></p>
+<p class="date"><em>2019-08-27</em></p>
 </div>
 <div id="prerequisites" class="section level1">
 <h1><span class="header-section-number">Chapter 1</span> Prerequisites</h1>
@@ -237,6 +237,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)
 <span class="kw">install.packages</span>(<span class="st">&quot;sf&quot;</span>)
 <span class="kw">install.packages</span>(<span class="st">&quot;spData&quot;</span>)
+<span class="kw">install.packages</span>(<span class="st">&quot;here&quot;</span>)
+<span class="kw">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)
+<span class="kw">install.packages</span>(<span class="st">&quot;tmap&quot;</span>)
+<span class="kw">install.packages</span>(<span class="st">&quot;cartography&quot;</span>)</code></pre>
+<p>For <a href="https://live.osgeo.org">OSGeoLive</a> users, there is already most of them installed in the distribution.
+Please start Jupyter Notebooks (Menu -&gt; GeoSpatial -&gt; Spatial Tools -&gt; Jupyter Notebook). It should open a web page.</p>
+<p>Click on <code>New</code> in the top right and start a new R Notebook. Then install only the following packages :</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)
 <span class="kw">install.packages</span>(<span class="st">&quot;here&quot;</span>)
 <span class="kw">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)
 <span class="kw">install.packages</span>(<span class="st">&quot;tmap&quot;</span>)

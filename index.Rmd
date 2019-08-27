@@ -38,6 +38,20 @@ install.packages("tmap")
 install.packages("cartography")
 ```
 
+For [OSGeoLive](https://live.osgeo.org) users, there is already most of them installed in the distribution.
+Please start Jupyter Notebooks (Menu -> GeoSpatial -> Spatial Tools -> Jupyter Notebook). It should open a web page.
+
+Click on `New` in the top right and start a new R Notebook. Then install only the following packages :
+
+
+```r
+install.packages("dplyr")
+install.packages("here")
+install.packages("ggplot2")
+install.packages("tmap")
+install.packages("cartography")
+```
+
 ## About this document
 
 This document had been written with the [R Bookdown package](https://bookdown.org/yihui/bookdown) and [Rstudio](https://www.rstudio.com). You can use the editor of your choice to follow the instruction, be careful on the path given by the {here} package.
