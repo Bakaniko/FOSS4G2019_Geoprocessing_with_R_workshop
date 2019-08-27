@@ -13,7 +13,7 @@ install.packages("cartography")
 ```
 
 
-For [OSGeoLive](https://live.osgeo.org) users, there is already most of them installed in the distribution.
+For [OSGeoLive](https://live.osgeo.org) users, there is already some of them installed in the distribution.
 Please start Jupyter Notebooks (Menu -> GeoSpatial -> Spatial Tools -> Jupyter Notebook). It should open a web page.
 
 Click on `New` in the top right and start a new R Notebook. Then install only the following packages :
@@ -22,7 +22,6 @@ Click on `New` in the top right and start a new R Notebook. Then install only th
 ```r
 install.packages("dplyr")
 install.packages("here")
-install.packages("ggplot2")
 install.packages("tmap")
 install.packages("cartography")
 ```
