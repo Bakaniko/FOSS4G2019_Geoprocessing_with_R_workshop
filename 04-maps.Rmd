@@ -12,7 +12,6 @@ library(sf)
 library(here)
 library(dplyr)
 library(ggplot2)
-library(ggspatial)
 library(tmap)
 ```
 
